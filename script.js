@@ -26,7 +26,7 @@ const CONFIG = {
 // "v=", e.g. for https://www.youtube.com/watch?v=dQw4w9WgXcQ the id is
 // "dQw4w9WgXcQ". Replace the title and id for each track below.
 const playlist = [
-  { title: "Song One",      youtubeId: "" },
+  { title: "Song One",      youtubeId: "cTSdJEGswtg" },
   { title: "Song Two",      youtubeId: "" },
   { title: "Song Three",    youtubeId: "" },
   { title: "Song Four",     youtubeId: "" },
