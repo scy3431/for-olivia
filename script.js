@@ -26,7 +26,7 @@ const CONFIG = {
 // `youtubeId` is the part of the YouTube URL after "v=", e.g. for
 // https://www.youtube.com/watch?v=dQw4w9WgXcQ the id is "dQw4w9WgXcQ".
 const playlist = [
-  { title: "Song One",      youtubeId: "cTSdJEGswtg" },
+  { title: "Waking Up Slow",      youtubeId: "cTSdJEGswtg" },
   { title: "Song Two",      youtubeId: "" },
   { title: "Song Three",    youtubeId: "" },
   { title: "Song Four",     youtubeId: "" },
