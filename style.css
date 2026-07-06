@@ -140,8 +140,12 @@ img { max-width: 100%; display: block; }
 
 .home-objects {
   display: flex;
-  gap: clamp(3rem, 10vw, 8rem);
-  align-items: flex-end;
+  width: 100%;
+  max-width: 1100px;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(2rem, 8vw, 6rem);
+  padding: 0 clamp(1.5rem, 8vw, 5rem);
 }
 
 .object-trigger {
@@ -182,7 +186,7 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
 }
 
-/* ---- Mini vinyl icon ---- */
+/* ---- Mini vinyl icon — spins continuously, even at rest ---- */
 .mini-vinyl {
   position: relative;
   width: clamp(200px, 30vw, 340px);
@@ -192,12 +196,10 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 10px 28px rgba(21, 16, 13, 0.35), 0 2px 0 rgba(255,255,255,0.06) inset;
   transition: box-shadow .4s var(--ease-soft), transform .4s var(--ease-soft);
   animation: spin 9s linear infinite;
-  animation-play-state: paused;
 }
 
 .object-trigger--vinyl:hover .mini-vinyl {
   box-shadow: 0 14px 34px rgba(21,16,13,0.42), 0 0 0 10px rgba(198,161,91,0.10);
-  animation-play-state: running;
 }
 
 .mini-vinyl__grooves {
@@ -295,10 +297,16 @@ img { max-width: 100%; display: block; }
   background: radial-gradient(circle, rgba(255,252,240,0.95), rgba(255,252,240,0) 60%);
   opacity: 0;
   pointer-events: none;
+  animation: camera-idle-flash 4s ease-in-out infinite;
 }
 
 .mini-camera__flash-burst.is-flashing {
   animation: camera-flash .5s ease-out;
+}
+
+@keyframes camera-idle-flash {
+  0%, 82%, 100% { opacity: 0; transform: scale(0.7); }
+  90%           { opacity: 0.55; transform: scale(1); }
 }
 
 @keyframes camera-flash {
@@ -596,44 +604,6 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-.controls-bar__progress {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
-.controls-bar__time {
-  font-size: 0.72rem;
-  color: var(--cream);
-  opacity: 0.75;
-  width: 2.6em;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-}
-
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  flex: 1;
-  height: 3px;
-  border-radius: 3px;
-  background: rgba(255,255,255,0.2);
-  outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 13px; height: 13px;
-  border-radius: 50%;
-  background: var(--gold-bright);
-  box-shadow: 0 0 0 4px rgba(230,199,132,0.18);
-  transition: transform .2s var(--ease-soft);
-}
-input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-input[type="range"]::-moz-range-thumb {
-  width: 13px; height: 13px; border: none; border-radius: 50%;
-  background: var(--gold-bright);
-}
-
 .controls-bar__buttons {
   display: flex;
   align-items: center;
@@ -651,7 +621,6 @@ input[type="range"]::-moz-range-thumb {
   transition: transform .25s var(--ease-spring), background .25s, color .25s;
 }
 .ctrl-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.08); }
-.ctrl-btn[aria-pressed="true"] { color: var(--rose); }
 
 .ctrl-btn--play {
   width: 52px; height: 52px;
@@ -659,17 +628,6 @@ input[type="range"]::-moz-range-thumb {
   color: var(--wood);
 }
 .ctrl-btn--play:hover { background: var(--gold-bright); transform: translateY(-2px) scale(1.04); }
-
-.controls-bar__volume {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  max-width: 220px;
-  margin: 0 auto;
-  color: var(--cream);
-  opacity: 0.85;
-}
-.volume-slider { flex: 1; }
 
 .youtube-target {
   position: absolute;
@@ -722,13 +680,6 @@ input[type="range"]::-moz-range-thumb {
   z-index: 2;
 }
 
-.gallery-item__button {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-}
-
 .gallery-item img {
   width: 100%;
   height: 100%;
@@ -755,78 +706,6 @@ input[type="range"]::-moz-range-thumb {
 .gallery-item:nth-child(3n)::before { background: linear-gradient(180deg, rgba(173,93,70,0.5), rgba(173,93,70,0.32)); }
 
 /* ---------------------------------------------------------------- */
-/* LIGHTBOX                                                           */
-/* ---------------------------------------------------------------- */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: rgba(21,16,13,0.92);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  animation: lightbox-in .3s var(--ease-soft) forwards;
-}
-
-@keyframes lightbox-in { to { opacity: 1; } }
-
-.lightbox__stage {
-  margin: 0;
-  max-width: min(88vw, 900px);
-  max-height: 82vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  animation: lightbox-zoom .35s var(--ease-soft) both;
-}
-
-@keyframes lightbox-zoom {
-  from { transform: scale(0.94); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
-}
-
-.lightbox__stage img {
-  max-width: 100%;
-  max-height: 72vh;
-  border-radius: 6px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-
-.lightbox__stage figcaption {
-  color: var(--cream);
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.05rem;
-  opacity: 0.85;
-}
-
-.lightbox__close {
-  position: absolute;
-  top: clamp(1rem, 3vh, 2rem);
-  right: clamp(1rem, 3vw, 2rem);
-  color: var(--cream);
-  padding: 0.6rem;
-  border-radius: 50%;
-  transition: background .25s;
-}
-.lightbox__close:hover { background: rgba(255,255,255,0.1); }
-
-.lightbox__nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--cream);
-  padding: 0.8rem;
-  border-radius: 50%;
-  transition: background .25s, transform .25s;
-}
-.lightbox__nav:hover { background: rgba(255,255,255,0.1); }
-.lightbox__nav--prev { left: clamp(0.5rem, 3vw, 2rem); }
-.lightbox__nav--next { right: clamp(0.5rem, 3vw, 2rem); }
-
-/* ---------------------------------------------------------------- */
 /* RESPONSIVE                                                         */
 /* ---------------------------------------------------------------- */
 @media (max-width: 860px) {
@@ -840,7 +719,6 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 540px) {
   .home-objects { gap: 2.2rem; }
   .controls-bar__buttons { gap: 0.7rem; }
-  .lightbox__nav { padding: 0.5rem; }
 }
 
 @media (max-width: 640px) {
