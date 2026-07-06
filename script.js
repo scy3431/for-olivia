@@ -9,7 +9,7 @@
 ===================================================================== */
 
 const CONFIG = {
-  // The title shown on the home screen
+  // The title shown in the browser tab
   siteTitle: "Keepsake",
 
   // A background image for the home screen (leave "" to keep the default
@@ -22,9 +22,9 @@ const CONFIG = {
   vinylArt: "assets/images/album.jpg",
 };
 
-// Exactly 13 songs. `youtubeId` is the part of the YouTube URL after
-// "v=", e.g. for https://www.youtube.com/watch?v=dQw4w9WgXcQ the id is
-// "dQw4w9WgXcQ". Replace the title and id for each track below.
+// Exactly 13 songs, played in this order from track 1 through track 13.
+// `youtubeId` is the part of the YouTube URL after "v=", e.g. for
+// https://www.youtube.com/watch?v=dQw4w9WgXcQ the id is "dQw4w9WgXcQ".
 const playlist = [
   { title: "Song One",      youtubeId: "cTSdJEGswtg" },
   { title: "Song Two",      youtubeId: "" },
@@ -41,8 +41,7 @@ const playlist = [
   { title: "Song Thirteen", youtubeId: "" },
 ];
 
-// Exactly 13 photographs. `src` is the file path, `caption` is optional
-// text shown under the photo in the lightbox.
+// Exactly 13 photographs, shown together in the gallery grid.
 const photos = [
   { src: "assets/images/photo1.jpg",  caption: "" },
   { src: "assets/images/photo2.jpg",  caption: "" },
@@ -71,8 +70,6 @@ const photos = [
   ------------------------------------------------------------- */
   function applyConfig() {
     document.title = CONFIG.siteTitle + " — A Scrapbook";
-    const titleEl = document.getElementById("site-title");
-    if (titleEl) titleEl.textContent = CONFIG.siteTitle;
 
     if (CONFIG.backgroundImage) {
       const backdrop = document.getElementById("home-backdrop");
@@ -90,7 +87,7 @@ const photos = [
 
   /* -------------------------------------------------------------
      Screen navigation (home / player / gallery)
-     Pure CSS-opacity crossfade, no page reloads.
+     Pure CSS-opacity crossfade, no page reloads, no carousels.
   ------------------------------------------------------------- */
   const screens = {
     home: document.getElementById("home-screen"),
@@ -100,9 +97,8 @@ const photos = [
 
   function showScreen(name) {
     // Visibility, hit-testing, and the crossfade are all handled purely
-    // by the .is-active class in CSS (see .screen / .screen.is-active),
-    // so switching screens is just a class toggle — nothing else to
-    // coordinate or time by hand.
+    // by the .is-active class in CSS, so switching screens is just a
+    // class toggle.
     Object.entries(screens).forEach(([key, el]) => {
       if (!el) return;
       el.classList.toggle("is-active", key === name);
@@ -119,13 +115,15 @@ const photos = [
     const backButtons = document.querySelectorAll("[data-back]");
 
     openPlayer.addEventListener("click", () => {
-      triggerVinylGrowAnimation();
       showScreen("player");
+      // Start the playlist from the first track every time the record
+      // player is opened, then keep playing straight through to #13.
+      playSongAt(0);
     });
 
     openGallery.addEventListener("click", () => {
       triggerCameraFlash();
-      window.setTimeout(() => showScreen("gallery"), 260);
+      showScreen("gallery");
     });
 
     backButtons.forEach((btn) =>
@@ -133,26 +131,16 @@ const photos = [
     );
   }
 
-  // A little momentary "grow" pulse on the mini vinyl before the record
-  // player screen fades in, so the click feels like it opens the object.
-  function triggerVinylGrowAnimation() {
-    const mini = document.querySelector(".mini-vinyl");
-    if (!mini) return;
-    mini.style.transition = "transform .5s cubic-bezier(.22,.61,.36,1)";
-    mini.style.transform = "scale(1.35)";
-    mini.classList.add("is-spinning");
-    window.setTimeout(() => {
-      mini.style.transform = "";
-    }, 550);
-  }
-
+  // A quick, one-off bright flash on the camera icon when it's clicked
+  // (the idle icon already flashes gently on its own — see the CSS).
   function triggerCameraFlash() {
     const flash = document.querySelector(".mini-camera__flash-burst");
     if (!flash) return;
-    flash.classList.remove("is-flashing");
-    // force reflow so the animation can restart
-    void flash.offsetWidth;
     flash.classList.add("is-flashing");
+    flash.addEventListener("animationend", function handler() {
+      flash.classList.remove("is-flashing");
+      flash.removeEventListener("animationend", handler);
+    });
   }
 
   /* -------------------------------------------------------------
@@ -160,8 +148,6 @@ const photos = [
   ------------------------------------------------------------- */
   const playlistEl = document.getElementById("playlist");
   let currentIndex = 0;
-  let isShuffle = false;
-  let isRepeat = false;
 
   function buildPlaylist() {
     playlistEl.innerHTML = "";
@@ -197,7 +183,6 @@ const photos = [
   ------------------------------------------------------------- */
   let ytPlayer = null;
   let ytReady = false;
-  let progressTimer = null;
 
   // Called automatically by the YouTube IFrame API script once loaded
   window.onYouTubeIframeAPIReady = function () {
@@ -215,7 +200,7 @@ const photos = [
       events: {
         onReady: () => {
           ytReady = true;
-          ytPlayer.setVolume(Number(volumeSlider.value));
+          ytPlayer.setVolume(80);
         },
         onStateChange: onPlayerStateChange,
       },
@@ -225,20 +210,15 @@ const photos = [
   function onPlayerStateChange(event) {
     if (event.data === YT.PlayerState.PLAYING) {
       setPlayingUI(true);
-      startProgressTimer();
     } else if (event.data === YT.PlayerState.PAUSED) {
       setPlayingUI(false);
-      stopProgressTimer();
     } else if (event.data === YT.PlayerState.ENDED) {
-      handleSongEnded();
-    }
-  }
-
-  function handleSongEnded() {
-    if (isRepeat) {
-      playSongAt(currentIndex);
-    } else {
-      goNext();
+      // Keep playing straight through the list; stop after track 13.
+      if (currentIndex < playlist.length - 1) {
+        goNext();
+      } else {
+        setPlayingUI(false);
+      }
     }
   }
 
@@ -261,21 +241,11 @@ const photos = [
   }
 
   function goNext() {
-    if (isShuffle) {
-      let next = currentIndex;
-      if (playlist.length > 1) {
-        while (next === currentIndex) {
-          next = Math.floor(Math.random() * playlist.length);
-        }
-      }
-      playSongAt(next);
-    } else {
-      playSongAt((currentIndex + 1) % playlist.length);
-    }
+    if (currentIndex < playlist.length - 1) playSongAt(currentIndex + 1);
   }
 
   function goPrev() {
-    playSongAt((currentIndex - 1 + playlist.length) % playlist.length);
+    if (currentIndex > 0) playSongAt(currentIndex - 1);
   }
 
   function togglePlayPause() {
@@ -316,87 +286,19 @@ const photos = [
   }
 
   /* -------------------------------------------------------------
-     Progress bar / seek / time display
+     Transport controls: previous, play/pause, next
   ------------------------------------------------------------- */
-  const seekSlider = document.getElementById("seek");
-  const timeCurrent = document.getElementById("time-current");
-  const timeDuration = document.getElementById("time-duration");
-  let isScrubbing = false;
-
-  function formatTime(seconds) {
-    if (!isFinite(seconds) || seconds < 0) seconds = 0;
-    const m = Math.floor(seconds / 60);
-    const s = Math.floor(seconds % 60);
-    return `${m}:${String(s).padStart(2, "0")}`;
-  }
-
-  function startProgressTimer() {
-    stopProgressTimer();
-    progressTimer = window.setInterval(() => {
-      if (!ytReady || isScrubbing) return;
-      const duration = ytPlayer.getDuration() || 0;
-      const current = ytPlayer.getCurrentTime() || 0;
-      if (duration > 0) {
-        seekSlider.value = String(Math.round((current / duration) * 1000));
-      }
-      timeCurrent.textContent = formatTime(current);
-      timeDuration.textContent = formatTime(duration);
-    }, 400);
-  }
-
-  function stopProgressTimer() {
-    if (progressTimer) {
-      window.clearInterval(progressTimer);
-      progressTimer = null;
-    }
-  }
-
-  function initSeek() {
-    seekSlider.addEventListener("input", () => { isScrubbing = true; });
-    seekSlider.addEventListener("change", () => {
-      if (ytReady) {
-        const duration = ytPlayer.getDuration() || 0;
-        const target = (Number(seekSlider.value) / 1000) * duration;
-        ytPlayer.seekTo(target, true);
-      }
-      isScrubbing = false;
-    });
-  }
-
-  /* -------------------------------------------------------------
-     Transport controls: play/pause, prev/next, shuffle, repeat, volume
-  ------------------------------------------------------------- */
-  const volumeSlider = document.getElementById("volume");
-
   function initControls() {
     btnPlay.addEventListener("click", togglePlayPause);
     document.getElementById("btn-next").addEventListener("click", goNext);
     document.getElementById("btn-prev").addEventListener("click", goPrev);
-
-    const shuffleBtn = document.getElementById("btn-shuffle");
-    shuffleBtn.addEventListener("click", () => {
-      isShuffle = !isShuffle;
-      shuffleBtn.setAttribute("aria-pressed", String(isShuffle));
-    });
-
-    const repeatBtn = document.getElementById("btn-repeat");
-    repeatBtn.addEventListener("click", () => {
-      isRepeat = !isRepeat;
-      repeatBtn.setAttribute("aria-pressed", String(isRepeat));
-    });
-
-    volumeSlider.addEventListener("input", () => {
-      if (ytReady) ytPlayer.setVolume(Number(volumeSlider.value));
-    });
-
-    initSeek();
   }
 
   /* -------------------------------------------------------------
-     Photograph gallery (masonry grid, lazy-loaded)
+     Photograph gallery — a plain grid of all 13 photos, lazy-loaded.
+     No lightbox, no carousel: just the gallery.
   ------------------------------------------------------------- */
   const galleryGrid = document.getElementById("gallery-grid");
-  let currentPhotoIndex = 0;
 
   function buildGallery() {
     galleryGrid.innerHTML = "";
@@ -407,94 +309,21 @@ const photos = [
       const tilt = ((i % 5) - 2) * 1.1;
       item.style.setProperty("--tilt", `${tilt}deg`);
 
-      const btn = document.createElement("button");
-      btn.className = "gallery-item__button";
-      btn.type = "button";
-      btn.setAttribute("aria-label", `Open photograph ${i + 1}`);
-      btn.addEventListener("click", () => openLightbox(i));
-
       const img = document.createElement("img");
       img.src = photo.src;
       img.loading = "lazy";
       img.decoding = "async";
       img.alt = photo.caption || `Photograph ${i + 1}`;
       img.onerror = function () {
-        // keep layout tidy even before the user supplies real photos
+        // keep the grid looking tidy even before real photos are added
         item.style.minHeight = "160px";
         item.style.background =
           "linear-gradient(155deg, var(--beige), var(--cream-deep))";
       };
 
-      btn.appendChild(img);
-      item.appendChild(btn);
+      item.appendChild(img);
       galleryGrid.appendChild(item);
     });
-  }
-
-  /* -------------------------------------------------------------
-     Lightbox: fullscreen viewer with keyboard + swipe support
-  ------------------------------------------------------------- */
-  const lightbox = document.getElementById("lightbox");
-  const lightboxImg = document.getElementById("lightbox-img");
-  const lightboxCaption = document.getElementById("lightbox-caption");
-
-  function openLightbox(index) {
-    currentPhotoIndex = index;
-    renderLightbox();
-    lightbox.hidden = false;
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeLightbox() {
-    lightbox.hidden = true;
-    document.body.style.overflow = "";
-  }
-
-  function renderLightbox() {
-    const photo = photos[currentPhotoIndex];
-    lightboxImg.src = photo.src;
-    lightboxImg.alt = photo.caption || `Photograph ${currentPhotoIndex + 1}`;
-    lightboxCaption.textContent = photo.caption || "";
-  }
-
-  function lightboxNext() {
-    currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
-    renderLightbox();
-  }
-
-  function lightboxPrev() {
-    currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
-    renderLightbox();
-  }
-
-  function initLightbox() {
-    document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
-    document.getElementById("lightbox-next").addEventListener("click", lightboxNext);
-    document.getElementById("lightbox-prev").addEventListener("click", lightboxPrev);
-
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (lightbox.hidden) return;
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowRight") lightboxNext();
-      if (e.key === "ArrowLeft") lightboxPrev();
-    });
-
-    // touch swipe support for mobile
-    let touchStartX = 0;
-    lightbox.addEventListener("touchstart", (e) => {
-      touchStartX = e.changedTouches[0].clientX;
-    }, { passive: true });
-
-    lightbox.addEventListener("touchend", (e) => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 40) {
-        if (dx < 0) lightboxNext(); else lightboxPrev();
-      }
-    }, { passive: true });
   }
 
   /* -------------------------------------------------------------
@@ -506,7 +335,6 @@ const photos = [
     buildPlaylist();
     buildGallery();
     initControls();
-    initLightbox();
     highlightActiveSong();
   }
 
