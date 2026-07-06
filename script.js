@@ -99,20 +99,13 @@ const photos = [
   };
 
   function showScreen(name) {
+    // Visibility, hit-testing, and the crossfade are all handled purely
+    // by the .is-active class in CSS (see .screen / .screen.is-active),
+    // so switching screens is just a class toggle — nothing else to
+    // coordinate or time by hand.
     Object.entries(screens).forEach(([key, el]) => {
       if (!el) return;
-      if (key === name) {
-        el.hidden = false;
-        // allow the browser to register hidden=false before adding the
-        // class, so the opacity transition actually plays
-        requestAnimationFrame(() => el.classList.add("is-active"));
-      } else {
-        el.classList.remove("is-active");
-        // wait for the fade-out transition before actually hiding
-        window.setTimeout(() => {
-          if (!el.classList.contains("is-active")) el.hidden = true;
-        }, 550);
-      }
+      el.classList.toggle("is-active", key === name);
     });
 
     if (name !== "player") {
