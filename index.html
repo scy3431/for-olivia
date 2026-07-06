@@ -141,6 +141,21 @@
   <div class="gallery-grid" id="gallery-grid"><!-- populated by script.js: a plain grid of all 13 photos, no fullscreen viewer --></div>
 </section>
 
+<!-- ======================================================
+     PHOTO ENLARGE OVERLAY
+     Click a photo to see it bigger. No next/previous — just
+     enlarge and close, so this never turns into a carousel.
+====================================================== -->
+<div id="photo-enlarge" class="photo-enlarge" hidden>
+  <button class="photo-enlarge__close" id="photo-enlarge-close" aria-label="Close">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+  <figure class="photo-enlarge__stage">
+    <img id="photo-enlarge-img" src="" alt="" />
+    <figcaption id="photo-enlarge-caption"></figcaption>
+  </figure>
+</div>
+
 <!-- YouTube IFrame API -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="script.js"></script>
