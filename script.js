@@ -296,7 +296,9 @@ const photos = [
 
   /* -------------------------------------------------------------
      Photograph gallery — a plain grid of all 13 photos, lazy-loaded.
-     No lightbox, no carousel: just the gallery.
+     Clicking a photo enlarges it. No lightbox carousel: just one
+     photo at a time, with a close button (or Esc, or clicking the
+     background) to dismiss it.
   ------------------------------------------------------------- */
   const galleryGrid = document.getElementById("gallery-grid");
 
@@ -308,6 +310,9 @@ const photos = [
       // gentle, deterministic tilt per photo for a handmade feel
       const tilt = ((i % 5) - 2) * 1.1;
       item.style.setProperty("--tilt", `${tilt}deg`);
+      item.setAttribute("role", "button");
+      item.setAttribute("tabindex", "0");
+      item.setAttribute("aria-label", `Enlarge photograph ${i + 1}`);
 
       const img = document.createElement("img");
       img.src = photo.src;
@@ -322,7 +327,45 @@ const photos = [
       };
 
       item.appendChild(img);
+      item.addEventListener("click", () => openEnlargedPhoto(photo, i));
+      item.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openEnlargedPhoto(photo, i);
+        }
+      });
       galleryGrid.appendChild(item);
+    });
+  }
+
+  /* -------------------------------------------------------------
+     Photo enlarge overlay (enlarge + close only — no carousel)
+  ------------------------------------------------------------- */
+  const enlargeOverlay = document.getElementById("photo-enlarge");
+  const enlargeImg = document.getElementById("photo-enlarge-img");
+  const enlargeCaption = document.getElementById("photo-enlarge-caption");
+
+  function openEnlargedPhoto(photo, index) {
+    enlargeImg.src = photo.src;
+    enlargeImg.alt = photo.caption || `Photograph ${index + 1}`;
+    enlargeCaption.textContent = photo.caption || "";
+    enlargeOverlay.hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeEnlargedPhoto() {
+    enlargeOverlay.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  function initEnlargeOverlay() {
+    document.getElementById("photo-enlarge-close").addEventListener("click", closeEnlargedPhoto);
+    enlargeImg.addEventListener("click", closeEnlargedPhoto);
+    enlargeOverlay.addEventListener("click", (e) => {
+      if (e.target === enlargeOverlay) closeEnlargedPhoto();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (!enlargeOverlay.hidden && e.key === "Escape") closeEnlargedPhoto();
     });
   }
 
@@ -335,6 +378,7 @@ const photos = [
     buildPlaylist();
     buildGallery();
     initControls();
+    initEnlargeOverlay();
     highlightActiveSong();
   }
 
