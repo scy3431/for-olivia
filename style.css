@@ -16,9 +16,9 @@
   --cream:        #F3ECDD;
   --cream-deep:   #EAE0CB;
   --beige:        #E4D4B4;
-  --wood:         #2E2018;
-  --wood-light:   #4A3526;
-  --wood-grain:   #3A2A1E;
+  --wood:         #4A3527;
+  --wood-light:   #6E5039;
+  --wood-grain:   #5C4530;
   --vinyl:        #15100D;
   --vinyl-sheen:  #2A211C;
   --gold:         #C6A15B;
@@ -212,7 +212,7 @@ img { max-width: 100%; display: block; }
 
 .mini-vinyl__label {
   position: absolute;
-  inset: 34%;
+  inset: 28%;
   border-radius: 50%;
   overflow: hidden;
   background: linear-gradient(135deg, var(--gold), #8a6a34);
@@ -332,11 +332,11 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--cream);
-  background: rgba(46,32,24,0.55);
+  background: rgba(74,53,39,0.55);
   backdrop-filter: blur(6px);
   transition: background .3s var(--ease-soft), transform .3s var(--ease-soft);
 }
-.back-button:hover { background: rgba(46,32,24,0.78); transform: translateX(-2px); }
+.back-button:hover { background: rgba(74,53,39,0.78); transform: translateX(-2px); }
 .back-button--dark { color: var(--cream); background: rgba(21,16,13,0.6); }
 
 /* ---------------------------------------------------------------- */
@@ -344,8 +344,8 @@ img { max-width: 100%; display: block; }
 /* ---------------------------------------------------------------- */
 .screen--player {
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.06), transparent 60%),
-    linear-gradient(180deg, var(--wood-light) 0%, var(--wood) 65%, #1c130d 100%);
+    radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.08), transparent 60%),
+    linear-gradient(180deg, #8a6a4a 0%, var(--wood-light) 55%, var(--wood) 100%);
   color: var(--cream);
   display: flex;
   flex-direction: column;
@@ -372,7 +372,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   aspect-ratio: 1 / 0.92;
   border-radius: 18px;
-  background: linear-gradient(155deg, #5a4230, #2c1f16 75%);
+  background: linear-gradient(155deg, #8a6a4a, #6E5039 75%);
   box-shadow:
     0 24px 50px rgba(0,0,0,0.45),
     0 1px 0 rgba(255,255,255,0.08) inset,
@@ -396,7 +396,7 @@ img { max-width: 100%; display: block; }
   width: 78%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, #3a2c22, #201510 85%);
+  background: radial-gradient(circle, #6E5039, #4A3527 85%);
   box-shadow: 0 6px 18px rgba(0,0,0,0.5) inset, 0 4px 10px rgba(0,0,0,0.4);
   display: flex;
   align-items: center;
@@ -430,7 +430,7 @@ img { max-width: 100%; display: block; }
 
 .vinyl-record__label {
   position: absolute;
-  inset: 35%;
+  inset: 29%;
   border-radius: 50%;
   overflow: hidden;
   background: linear-gradient(135deg, var(--gold), #7d5f2e);
@@ -505,7 +505,7 @@ img { max-width: 100%; display: block; }
   width: 16px;
   height: 10px;
   border-radius: 3px;
-  background: linear-gradient(160deg, #3a2c22, #171310);
+  background: linear-gradient(160deg, #6E5039, #4A3527);
 }
 
 .now-playing {
@@ -594,7 +594,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   max-width: 980px;
   margin: clamp(1.8rem, 4vh, 2.6rem) auto 0;
-  background: rgba(21,16,13,0.55);
+  background: rgba(74,53,39,0.55);
   backdrop-filter: blur(8px);
   border-radius: 16px;
   padding: 1rem 1.4rem 1.2rem;
@@ -704,6 +704,79 @@ img { max-width: 100%; display: block; }
 }
 
 .gallery-item:nth-child(3n)::before { background: linear-gradient(180deg, rgba(173,93,70,0.5), rgba(173,93,70,0.32)); }
+
+.gallery-item {
+  cursor: zoom-in;
+}
+
+/* ---------------------------------------------------------------- */
+/* PHOTO ENLARGE OVERLAY                                              */
+/* Deliberately simple: enlarge + close only, no next/previous, so   */
+/* it can never read as a carousel. Visibility is driven by the      */
+/* native `hidden` attribute; the `:not([hidden])` pairing below     */
+/* means there is only ever one rule in charge of `display`, so it   */
+/* can't be silently overridden the way a bare `.class{display:flex}`*/
+/* rule could.                                                       */
+/* ---------------------------------------------------------------- */
+.photo-enlarge {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(21,16,13,0.92);
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-enlarge:not([hidden]) {
+  display: flex;
+  animation: photo-enlarge-in .3s var(--ease-soft) forwards;
+}
+
+@keyframes photo-enlarge-in { from { opacity: 0; } to { opacity: 1; } }
+
+.photo-enlarge__stage {
+  margin: 0;
+  max-width: min(88vw, 900px);
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  animation: photo-enlarge-zoom .35s var(--ease-soft) both;
+}
+
+@keyframes photo-enlarge-zoom {
+  from { transform: scale(0.94); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.photo-enlarge__stage img {
+  max-width: 100%;
+  max-height: 72vh;
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  cursor: zoom-out;
+}
+
+.photo-enlarge__stage figcaption {
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  opacity: 0.85;
+}
+
+.photo-enlarge__close {
+  position: absolute;
+  top: clamp(1rem, 3vh, 2rem);
+  right: clamp(1rem, 3vw, 2rem);
+  color: var(--cream);
+  padding: 0.6rem;
+  border-radius: 50%;
+  transition: background .25s;
+}
+.photo-enlarge__close:hover { background: rgba(255,255,255,0.1); }
 
 /* ---------------------------------------------------------------- */
 /* RESPONSIVE                                                         */
