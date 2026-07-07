@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Keepsake Vinyl &amp; Scrapbook</title>
+<title>Keepsake &mdash; A Vinyl &amp; Photograph Scrapbook</title>
 <meta name="description" content="An interactive scrapbook: a record player and a photograph collection, kept together." />
 
 <!-- Google Fonts: Cormorant Garamond (display serif) + Jost (clean sans) -->
@@ -64,10 +64,16 @@
 ====================================================== -->
 <section id="player-screen" class="screen screen--player" aria-label="Record player">
 
-  <button class="back-button" data-back aria-label="Back to home">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 4L7 12L15 20" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>back</span>
-  </button>
+  <div class="screen-nav">
+    <button class="back-button" data-back aria-label="Back to home">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 4L7 12L15 20" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>back</span>
+    </button>
+    <button class="back-button back-button--music" data-back-keep-music aria-label="Back to the photographs, keep the music playing">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M9 18V6l10-2v12" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none"/><circle cx="16.5" cy="16" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none"/></svg>
+      <span>back (with music)</span>
+    </button>
+  </div>
 
   <div class="player-layout">
 
@@ -133,10 +139,12 @@
      GALLERY SCREEN
 ====================================================== -->
 <section id="gallery-screen" class="screen screen--gallery" aria-label="Photograph gallery">
-  <button class="back-button back-button--dark" data-back aria-label="Back to home">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 4L7 12L15 20" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>back</span>
-  </button>
+  <div class="screen-nav">
+    <button class="back-button back-button--dark" data-back aria-label="Back to home">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 4L7 12L15 20" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>back</span>
+    </button>
+  </div>
 
   <h2 class="gallery-title">Photographs</h2>
 
