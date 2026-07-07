@@ -21,7 +21,7 @@ const CONFIG = {
 const playlist = [
   { title: "Waking Up Slow",      youtubeId: "cTSdJEGswtg" },
   { title: "Flightless Bird, American Mouth",      youtubeId: "RGVmhrfQqzg" },
-  { title: "Song Three",    youtubeId: "" },
+  { title: "Stay Love",    youtubeId: "hLWLS-Csppw" },
   { title: "Song Four",     youtubeId: "" },
   { title: "Song Five",     youtubeId: "" },
   { title: "Song Six",      youtubeId: "" },
