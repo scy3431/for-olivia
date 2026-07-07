@@ -4,6 +4,10 @@
    Vanilla JS only. No build step. No backend.
 ===================================================================== */
 
+/* =====================================================================
+   ░░░  EDIT ME  ░░░  — everything you'll want to personalize lives here
+===================================================================== */
+
 const CONFIG = {
   // The title shown in the browser tab
   siteTitle: "Keepsake",
@@ -18,6 +22,9 @@ const CONFIG = {
   vinylArt: "assets/images/album.jpg",
 };
 
+// Exactly 13 songs, played in this order from track 1 through track 13.
+// `youtubeId` is the part of the YouTube URL after "v=", e.g. for
+// https://www.youtube.com/watch?v=dQw4w9WgXcQ the id is "dQw4w9WgXcQ".
 const playlist = [
   { title: "Waking Up Slow",      youtubeId: "cTSdJEGswtg" },
   { title: "Flightless Bird, American Mouth",      youtubeId: "RGVmhrfQqzg" },
@@ -88,7 +95,7 @@ const photos = [
     gallery: document.getElementById("gallery-screen"),
   };
 
-  function showScreen(name) {
+  function showScreen(name, keepMusic) {
     // Visibility, hit-testing, and the crossfade are all handled purely
     // by the .is-active class in CSS, so switching screens is just a
     // class toggle.
@@ -97,7 +104,7 @@ const photos = [
       el.classList.toggle("is-active", key === name);
     });
 
-    if (name !== "player") {
+    if (name !== "player" && !keepMusic) {
       pausePlayback();
     }
   }
@@ -106,6 +113,7 @@ const photos = [
     const openPlayer = document.getElementById("open-player");
     const openGallery = document.getElementById("open-gallery");
     const backButtons = document.querySelectorAll("[data-back]");
+    const backKeepMusicButtons = document.querySelectorAll("[data-back-keep-music]");
 
     openPlayer.addEventListener("click", () => {
       showScreen("player");
@@ -121,6 +129,12 @@ const photos = [
 
     backButtons.forEach((btn) =>
       btn.addEventListener("click", () => showScreen("home"))
+    );
+
+    // "Back (with music)" — leaves the record player for the
+    // photographs without pausing whatever song is currently playing.
+    backKeepMusicButtons.forEach((btn) =>
+      btn.addEventListener("click", () => showScreen("gallery", true))
     );
   }
 
