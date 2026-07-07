@@ -372,7 +372,13 @@ img { max-width: 100%; display: block; }
   width: 100%;
   aspect-ratio: 1 / 0.92;
   border-radius: 18px;
-  background: linear-gradient(155deg, #6E5039 0%, #3A2A1E 80%);
+  background:
+    radial-gradient(circle, #1c130d 45%, transparent 48%) 6% 6% / 3.2% 3.2% no-repeat,
+    radial-gradient(circle, #1c130d 45%, transparent 48%) 94% 6% / 3.2% 3.2% no-repeat,
+    radial-gradient(circle, #1c130d 45%, transparent 48%) 6% 94% / 3.2% 3.2% no-repeat,
+    radial-gradient(circle, #1c130d 45%, transparent 48%) 94% 94% / 3.2% 3.2% no-repeat,
+    repeating-linear-gradient(100deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 6px),
+    linear-gradient(155deg, #6E5039 0%, #3A2A1E 80%);
   box-shadow:
     0 24px 50px rgba(0,0,0,0.45),
     0 1px 0 rgba(255,255,255,0.08) inset,
@@ -381,6 +387,32 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* A small brand plate, lower-left of the plinth */
+.turntable::before {
+  content: "";
+  position: absolute;
+  left: 7%;
+  bottom: 5%;
+  width: 24%;
+  height: 6%;
+  border-radius: 3px;
+  background: linear-gradient(160deg, rgba(0,0,0,0.28), rgba(0,0,0,0.06));
+  box-shadow: 0 0 0 1px rgba(230,199,132,0.28) inset, 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* A pair of speed-selector dots, lower-right of the plinth (33 / 45) */
+.turntable::after {
+  content: "";
+  position: absolute;
+  right: 7%;
+  bottom: 5%;
+  width: 16%;
+  height: 6%;
+  background:
+    radial-gradient(circle at 28% 50%, var(--gold-bright) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 72% 50%, rgba(228,199,132,0.35) 0 3px, transparent 3.5px);
 }
 
 .turntable__plinth-shine {
@@ -486,7 +518,7 @@ img { max-width: 100%; display: block; }
   transition: transform 1.1s var(--ease-soft);
 }
 
-.tonearm.is-playing .tonearm__pivot { transform: rotate(-34deg); }
+.tonearm.is-playing .tonearm__pivot { transform: rotate(30deg); }
 
 .tonearm__wand {
   position: relative;
@@ -506,6 +538,18 @@ img { max-width: 100%; display: block; }
   height: 10px;
   border-radius: 3px;
   background: linear-gradient(160deg, #6E5039, #4A3527);
+}
+
+.tonearm-rest {
+  position: absolute;
+  left: 96%;
+  top: 70%;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #7d5f2e, #3A2A1E 75%);
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.4);
 }
 
 .now-playing {
