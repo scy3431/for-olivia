@@ -4,6 +4,10 @@
    Vanilla JS only. No build step. No backend.
 ===================================================================== */
 
+/* =====================================================================
+   ░░░  EDIT ME  ░░░  — everything you'll want to personalize lives here
+===================================================================== */
+
 const CONFIG = {
   // The title shown in the browser tab
   siteTitle: "Keepsake",
