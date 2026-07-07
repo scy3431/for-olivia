@@ -25,7 +25,7 @@ const playlist = [
   { title: "Ordinary",     youtubeId: "NaZznqme2hg" },
   { title: "Sweet Love",     youtubeId: "Q-p2mVc8qsQ" },
   { title: "Iris",      youtubeId: "hpy8F9uzqv0" },
-  { title: "Song Seven",    youtubeId: "" },
+  { title: "Bad Dreams",    youtubeId: "iMIZf1YY0zs" },
   { title: "Song Eight",    youtubeId: "" },
   { title: "Song Nine",     youtubeId: "" },
   { title: "Song Ten",      youtubeId: "" },
