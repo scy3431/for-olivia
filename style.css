@@ -405,19 +405,6 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 
-/* A small brand plate, lower-left of the plinth */
-.turntable::before {
-  content: "";
-  position: absolute;
-  left: 7%;
-  bottom: 5%;
-  width: 24%;
-  height: 6%;
-  border-radius: 3px;
-  background: linear-gradient(160deg, rgba(0,0,0,0.28), rgba(0,0,0,0.06));
-  box-shadow: 0 0 0 1px rgba(230,199,132,0.28) inset, 0 1px 0 rgba(255,255,255,0.05);
-}
-
 /* A pair of speed-selector dots, lower-right of the plinth (33 / 45) */
 .turntable::after {
   content: "";
