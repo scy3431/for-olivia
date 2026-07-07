@@ -4,10 +4,6 @@
    Vanilla JS only. No build step. No backend.
 ===================================================================== */
 
-/* =====================================================================
-   ░░░  EDIT ME  ░░░  — everything you'll want to personalize lives here
-===================================================================== */
-
 const CONFIG = {
   // The title shown in the browser tab
   siteTitle: "Keepsake",
@@ -22,12 +18,9 @@ const CONFIG = {
   vinylArt: "assets/images/album.jpg",
 };
 
-// Exactly 13 songs, played in this order from track 1 through track 13.
-// `youtubeId` is the part of the YouTube URL after "v=", e.g. for
-// https://www.youtube.com/watch?v=dQw4w9WgXcQ the id is "dQw4w9WgXcQ".
 const playlist = [
   { title: "Waking Up Slow",      youtubeId: "cTSdJEGswtg" },
-  { title: "Song Two",      youtubeId: "" },
+  { title: "Flightless Bird, American Mouth",      youtubeId: "RGVmhrfQqzg" },
   { title: "Song Three",    youtubeId: "" },
   { title: "Song Four",     youtubeId: "" },
   { title: "Song Five",     youtubeId: "" },
