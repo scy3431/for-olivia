@@ -25,7 +25,7 @@ const playlist = [
   { title: "Bad Dreams",    youtubeId: "iMIZf1YY0zs" },
   { title: "Runnin' Home to You",    youtubeId: "f4a1vf7l-jI" },
   { title: "San Luis",     youtubeId: "7BJ7MDOmLPE" },
-  { title: "Song Ten",      youtubeId: "" },
+  { title: "Bloom",      youtubeId: "8inJtTG_DuU" },
   { title: "Song Eleven",   youtubeId: "" },
   { title: "Song Twelve",   youtubeId: "" },
   { title: "Song Thirteen", youtubeId: "" },
