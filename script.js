@@ -27,8 +27,8 @@ const playlist = [
   { title: "San Luis",     youtubeId: "7BJ7MDOmLPE" },
   { title: "Bloom",      youtubeId: "8inJtTG_DuU" },
   { title: "Amsterdam",   youtubeId: "lz2qpnRB5_E" },
-  { title: "Song Twelve",   youtubeId: "" },
   { title: "Tenerife Sea", youtubeId: "2tHes1FQfwU" },
+  { title: "If We Were Vampires",   youtubeId: "246pND4SGXk" },
 ];
 
 // Exactly 13 photographs, shown together in the gallery grid.
