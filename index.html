@@ -19,19 +19,16 @@
 </head>
 <body>
 
-<!-- Grain / vignette overlay sits above everything, purely decorative -->
 <div class="grain-overlay" aria-hidden="true"></div>
 
-<!-- ======================================================
-     HOME SCREEN
-====================================================== -->
+<!-- Home screen -->
 <main id="home-screen" class="screen screen--home is-active" aria-label="Home">
 
   <div class="home-backdrop" id="home-backdrop"></div>
 
   <div class="home-objects">
 
-    <!-- ICON 1: Vinyl record -->
+    <!-- Icon 1: Vinyl record -->
     <button class="object-trigger object-trigger--vinyl" id="open-player" aria-label="Open the record player">
       <span class="tabletop-shadow" aria-hidden="true"></span>
       <span class="mini-vinyl" aria-hidden="true">
@@ -44,7 +41,7 @@
       <span class="object-caption">the record player</span>
     </button>
 
-    <!-- ICON 2: Camera -->
+    <!-- Icon 2: Camera -->
     <button class="object-trigger object-trigger--camera" id="open-gallery" aria-label="Open the photograph gallery">
       <span class="tabletop-shadow" aria-hidden="true"></span>
       <span class="mini-camera" aria-hidden="true">
@@ -63,9 +60,7 @@
   </div>
 </main>
 
-<!-- ======================================================
-     RECORD PLAYER SCREEN
-====================================================== -->
+<!-- Record player screen -->
 <section id="player-screen" class="screen screen--player" aria-label="Record player">
 
   <div class="screen-nav">
@@ -81,7 +76,7 @@
 
   <div class="player-layout">
 
-    <!-- The physical turntable -->
+    <!-- Turntable design -->
     <div class="turntable-wrap">
       <div class="turntable">
         <div class="turntable__plinth-shine" aria-hidden="true"></div>
@@ -112,14 +107,13 @@
       <p class="now-playing" id="now-playing">Choose a song to begin</p>
     </div>
 
-    <!-- Liner-notes style playlist -->
     <aside class="liner-notes">
       <h2 class="liner-notes__title">Side&nbsp;A</h2>
       <ol class="playlist" id="playlist"><!-- populated by script.js --></ol>
     </aside>
   </div>
 
-  <!-- Transport controls: previous, play/pause, next -->
+  <!-- previous, play/pause, next -->
   <div class="controls-bar">
     <div class="controls-bar__buttons">
       <button class="ctrl-btn ctrl-btn--prev" id="btn-prev" aria-label="Previous song" title="Previous">
@@ -135,13 +129,11 @@
     </div>
   </div>
 
-  <!-- Hidden YouTube player target -->
+  <!-- hidden YouTube player target -->
   <div id="youtube-player" class="youtube-target" aria-hidden="true"></div>
 </section>
 
-<!-- ======================================================
-     GALLERY SCREEN
-====================================================== -->
+<!-- gallery screen -->
 <section id="gallery-screen" class="screen screen--gallery" aria-label="Photograph gallery">
   <div class="screen-nav">
     <button class="back-button back-button--dark" data-back aria-label="Back to home">
@@ -155,11 +147,7 @@
   <div class="gallery-grid" id="gallery-grid"><!-- populated by script.js: a plain grid of all 13 photos, no fullscreen viewer --></div>
 </section>
 
-<!-- ======================================================
-     PHOTO ENLARGE OVERLAY
-     Click a photo to see it bigger. No next/previous — just
-     enlarge and close, so this never turns into a carousel.
-====================================================== -->
+<!-- photo enlarge overlay -->
 <div id="photo-enlarge" class="photo-enlarge" hidden>
   <button class="photo-enlarge__close" id="photo-enlarge-close" aria-label="Close">
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -170,7 +158,7 @@
   </figure>
 </div>
 
-<!-- YouTube IFrame API -->
+<!-- youtube iframe api -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="script.js"></script>
 </body>
