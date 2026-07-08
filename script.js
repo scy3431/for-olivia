@@ -28,7 +28,7 @@ const playlist = [
   { title: "Bloom",      youtubeId: "8inJtTG_DuU" },
   { title: "Amsterdam",   youtubeId: "lz2qpnRB5_E" },
   { title: "Song Twelve",   youtubeId: "" },
-  { title: "Song Thirteen", youtubeId: "" },
+  { title: "Tenerife Sea", youtubeId: "2tHes1FQfwU" },
 ];
 
 // Exactly 13 photographs, shown together in the gallery grid.
