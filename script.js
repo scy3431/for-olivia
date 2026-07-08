@@ -1,20 +1,12 @@
 const CONFIG = {
   // The title shown in the browser tab
-  siteTitle: "Keepsake",
+  siteTitle: "Gift for my love",
 
-  // A background image for the home screen (leave "" to keep the default
-  // paper-toned gradient). Example: "assets/images/background.jpg"
   backgroundImage: "",
 
-  // The image shown in the center of the vinyl record, on the mini icon
-  // and on the turntable label. Recommended: a square image, at least
-  // 400x400px. Example: "assets/images/album.jpg"
   vinylArt: "assets/images/album.jpg",
 };
 
-// Exactly 13 songs, played in this order from track 1 through track 13.
-// `youtubeId` is the part of the YouTube URL after "v=", e.g. for
-// https://www.youtube.com/watch?v=dQw4w9WgXcQ the id is "dQw4w9WgXcQ".
 const playlist = [
   { title: "Waking Up Slow",      youtubeId: "cTSdJEGswtg" },
   { title: "Flightless Bird, American Mouth",      youtubeId: "RGVmhrfQqzg" },
@@ -31,7 +23,6 @@ const playlist = [
   { title: "If We Were Vampires",   youtubeId: "246pND4SGXk" },
 ];
 
-// Exactly 13 photographs, shown together in the gallery grid.
 const photos = [
   { src: "assets/images/photo1.jpg",  caption: "" },
   { src: "assets/images/photo2.jpg",  caption: "" },
@@ -48,18 +39,12 @@ const photos = [
   { src: "assets/images/photo13.jpg", caption: "" },
 ];
 
-/* =====================================================================
-   ░░░  END OF EDIT ME SECTION  ░░░  — the rest wires everything up
-===================================================================== */
 
 (function () {
   "use strict";
 
-  /* -------------------------------------------------------------
-     Apply basic customization to the DOM
-  ------------------------------------------------------------- */
   function applyConfig() {
-    document.title = CONFIG.siteTitle + " — A Scrapbook";
+    document.title = CONFIG.siteTitle;
 
     if (CONFIG.backgroundImage) {
       const backdrop = document.getElementById("home-backdrop");
@@ -75,10 +60,6 @@ const photos = [
     if (playerArt) playerArt.src = CONFIG.vinylArt;
   }
 
-  /* -------------------------------------------------------------
-     Screen navigation (home / player / gallery)
-     Pure CSS-opacity crossfade, no page reloads, no carousels.
-  ------------------------------------------------------------- */
   const screens = {
     home: document.getElementById("home-screen"),
     player: document.getElementById("player-screen"),
@@ -86,9 +67,6 @@ const photos = [
   };
 
   function showScreen(name, keepMusic) {
-    // Visibility, hit-testing, and the crossfade are all handled purely
-    // by the .is-active class in CSS, so switching screens is just a
-    // class toggle.
     Object.entries(screens).forEach(([key, el]) => {
       if (!el) return;
       el.classList.toggle("is-active", key === name);
@@ -107,8 +85,6 @@ const photos = [
 
     openPlayer.addEventListener("click", () => {
       showScreen("player");
-      // Start the playlist from the first track every time the record
-      // player is opened, then keep playing straight through to #13.
       playSongAt(0);
     });
 
@@ -121,15 +97,11 @@ const photos = [
       btn.addEventListener("click", () => showScreen("home"))
     );
 
-    // "Back (with music)" — leaves the record player for the
-    // photographs without pausing whatever song is currently playing.
     backKeepMusicButtons.forEach((btn) =>
       btn.addEventListener("click", () => showScreen("gallery", true))
     );
   }
 
-  // A quick, one-off bright flash on the camera icon when it's clicked
-  // (the idle icon already flashes gently on its own — see the CSS).
   function triggerCameraFlash() {
     const flash = document.querySelector(".mini-camera__flash-burst");
     if (!flash) return;
@@ -140,9 +112,7 @@ const photos = [
     });
   }
 
-  /* -------------------------------------------------------------
-     Build the playlist UI
-  ------------------------------------------------------------- */
+  /* playlist ui */
   const playlistEl = document.getElementById("playlist");
   let currentIndex = 0;
 
@@ -175,9 +145,7 @@ const photos = [
     }
   }
 
-  /* -------------------------------------------------------------
-     YouTube IFrame API integration
-  ------------------------------------------------------------- */
+  /* youtube iframe api integration*/
   let ytPlayer = null;
   let ytReady = false;
 
@@ -210,7 +178,7 @@ const photos = [
     } else if (event.data === YT.PlayerState.PAUSED) {
       setPlayingUI(false);
     } else if (event.data === YT.PlayerState.ENDED) {
-      // Keep playing straight through the list; stop after track 13.
+      // keep playing straight through the list; stop after track 13.
       if (currentIndex < playlist.length - 1) {
         goNext();
       } else {
@@ -222,8 +190,6 @@ const photos = [
   function loadAndPlay(index) {
     const song = playlist[index];
     if (!song || !song.youtubeId || !ytReady) {
-      // No id provided yet — still update the UI so the scrapbook feels
-      // alive even before real songs are wired in.
       highlightActiveSong();
       return;
     }
@@ -265,9 +231,7 @@ const photos = [
     }
   }
 
-  /* -------------------------------------------------------------
-     Visual state: spinning record + tonearm gesture
-  ------------------------------------------------------------- */
+  /* visual state, tonearm movement */
   const vinylRecord = document.getElementById("vinyl-record");
   const tonearm = document.getElementById("tonearm");
   const iconPlay = document.getElementById("icon-play");
@@ -282,21 +246,14 @@ const photos = [
     btnPlay.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
   }
 
-  /* -------------------------------------------------------------
-     Transport controls: previous, play/pause, next
-  ------------------------------------------------------------- */
+  /* play, pause, next, previous */
   function initControls() {
     btnPlay.addEventListener("click", togglePlayPause);
     document.getElementById("btn-next").addEventListener("click", goNext);
     document.getElementById("btn-prev").addEventListener("click", goPrev);
   }
 
-  /* -------------------------------------------------------------
-     Photograph gallery — a plain grid of all 13 photos, lazy-loaded.
-     Clicking a photo enlarges it. No lightbox carousel: just one
-     photo at a time, with a close button (or Esc, or clicking the
-     background) to dismiss it.
-  ------------------------------------------------------------- */
+  /* grid of all photos */
   const galleryGrid = document.getElementById("gallery-grid");
 
   function buildGallery() {
@@ -304,7 +261,7 @@ const photos = [
     photos.forEach((photo, i) => {
       const item = document.createElement("div");
       item.className = "gallery-item";
-      // gentle, deterministic tilt per photo for a handmade feel
+      // tilt per photo
       const tilt = ((i % 5) - 2) * 1.1;
       item.style.setProperty("--tilt", `${tilt}deg`);
       item.setAttribute("role", "button");
@@ -335,9 +292,7 @@ const photos = [
     });
   }
 
-  /* -------------------------------------------------------------
-     Photo enlarge overlay (enlarge + close only — no carousel)
-  ------------------------------------------------------------- */
+  /* photo enlarge */
   const enlargeOverlay = document.getElementById("photo-enlarge");
   const enlargeImg = document.getElementById("photo-enlarge-img");
   const enlargeCaption = document.getElementById("photo-enlarge-caption");
@@ -366,9 +321,7 @@ const photos = [
     });
   }
 
-  /* -------------------------------------------------------------
-     Boot
-  ------------------------------------------------------------- */
+  
   function init() {
     applyConfig();
     initNavigation();
