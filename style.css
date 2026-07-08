@@ -1,18 +1,5 @@
-/* =====================================================================
-   KEEPSAKE — a vinyl & photograph scrapbook
-   ---------------------------------------------------------------------
-   TOKEN SYSTEM
-   Color   cream paper, warm beige, dark walnut wood, vinyl black, aged
-           gold hardware, dusty rose (romantic accent, used sparingly)
-   Type    Cormorant Garamond (display, romantic serif) for titles,
-           Jost (clean geometric sans) for body & interface text
-   Motion  a page-load hush, hover micro-interactions, and one signature
-           gesture: the tonearm physically lifts and settles onto the
-           record when playback starts and stops
-===================================================================== */
-
 :root {
-  /* ---- color tokens ---- */
+  /* color tokens */
   --cream:        #F3ECDD;
   --cream-deep:   #EAE0CB;
   --beige:        #E4D4B4;
@@ -28,18 +15,16 @@
   --ink-soft:     #6E5F4F;
   --paper-line:   rgba(43, 36, 30, 0.12);
 
-  /* ---- type tokens ---- */
+  /* type tokens */
   --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
   --font-body:    'Jost', 'Helvetica Neue', Arial, sans-serif;
 
-  /* ---- motion tokens ---- */
+  /* motion tokens */
   --ease-soft: cubic-bezier(.22, .61, .36, 1);
   --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
 }
 
-/* ---------------------------------------------------------------- */
-/* RESET & BASE                                                      */
-/* ---------------------------------------------------------------- */
+/* reset and base */
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body {
@@ -80,7 +65,7 @@ img { max-width: 100%; display: block; }
   background-size: 3px 3px, 5px 5px;
 }
 
-/* respect reduced-motion preferences throughout */
+/* reduced-motion preferences throughout */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -89,9 +74,8 @@ img { max-width: 100%; display: block; }
   }
 }
 
-/* ---------------------------------------------------------------- */
-/* SCREEN MANAGEMENT (single-page transitions, no reloads)          */
-/* ---------------------------------------------------------------- */
+
+/* screen page management */
 .screen {
   position: fixed;
   inset: 0;
@@ -110,9 +94,8 @@ img { max-width: 100%; display: block; }
   transition: opacity .55s var(--ease-soft), visibility 0s linear 0s;
 }
 
-/* ---------------------------------------------------------------- */
-/* HOME SCREEN                                                       */
-/* ---------------------------------------------------------------- */
+
+/* home screen */
 .screen--home {
   display: flex;
   flex-direction: column;
@@ -186,7 +169,7 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
 }
 
-/* ---- Mini vinyl icon — spins continuously, even at rest ---- */
+/* vinyl icon spinning continuously */
 .mini-vinyl {
   position: relative;
   width: clamp(200px, 30vw, 340px);
@@ -227,7 +210,7 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(115deg, rgba(255,255,255,0.16) 0%, transparent 32%);
 }
 
-/* ---- Mini camera icon ---- */
+/* camera icon */
 .mini-camera {
   position: relative;
   width: clamp(200px, 30vw, 340px);
@@ -315,9 +298,7 @@ img { max-width: 100%; display: block; }
   100% { opacity: 0; transform: scale(1.6); }
 }
 
-/* ---------------------------------------------------------------- */
-/* SHARED: back button(s)                                             */
-/* ---------------------------------------------------------------- */
+
 .screen-nav {
   position: absolute;
   top: clamp(1rem, 3vh, 2rem);
@@ -346,18 +327,14 @@ img { max-width: 100%; display: block; }
 .back-button--dark { color: var(--cream); background: rgba(21,16,13,0.6); }
 .back-button--dark:hover { background: rgba(21,16,13,0.8); }
 
-/* The "keep the music playing" option reads as a distinct, secondary
-   choice — same shape, gold-tinted so it stands out from the plain
-   back button next to it. */
+
 .back-button--music {
   background: rgba(198,161,91,0.28);
   color: var(--gold-bright);
 }
 .back-button--music:hover { background: rgba(198,161,91,0.42); }
 
-/* ---------------------------------------------------------------- */
-/* RECORD PLAYER SCREEN                                               */
-/* ---------------------------------------------------------------- */
+/* record player screen */
 .screen--player {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.10), transparent 60%),
@@ -405,7 +382,7 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 
-/* A pair of speed-selector dots, lower-right of the plinth (33 / 45) */
+/* Pair of speed-selector dots, lower-right of the plinth (33 / 45) */
 .turntable::after {
   content: "";
   position: absolute;
@@ -489,7 +466,7 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 0 4px rgba(0,0,0,0.5);
 }
 
-/* Tonearm — the signature interaction: lifts and settles */
+/* tonearm interaction: lifts and settles */
 .tonearm {
   position: absolute;
   top: 6%;
@@ -565,7 +542,7 @@ img { max-width: 100%; display: block; }
   min-height: 1.6em;
 }
 
-/* Liner notes / playlist panel */
+/* liner notes / playlist panel */
 .liner-notes {
   background: var(--cream);
   color: var(--ink);
@@ -636,7 +613,7 @@ img { max-width: 100%; display: block; }
 }
 .playlist__item.is-active .playlist__button::before { color: var(--rose); }
 
-/* Transport controls bar */
+/* transport controls bar */
 .controls-bar {
   width: 100%;
   max-width: 980px;
@@ -684,9 +661,7 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
-/* ---------------------------------------------------------------- */
-/* GALLERY SCREEN                                                     */
-/* ---------------------------------------------------------------- */
+/* gallery screen */
 .screen--gallery {
   background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
   padding: clamp(4.5rem, 10vh, 6rem) clamp(1.2rem, 5vw, 3.5rem) 4rem;
@@ -756,15 +731,7 @@ img { max-width: 100%; display: block; }
   cursor: zoom-in;
 }
 
-/* ---------------------------------------------------------------- */
-/* PHOTO ENLARGE OVERLAY                                              */
-/* Deliberately simple: enlarge + close only, no next/previous, so   */
-/* it can never read as a carousel. Visibility is driven by the      */
-/* native `hidden` attribute; the `:not([hidden])` pairing below     */
-/* means there is only ever one rule in charge of `display`, so it   */
-/* can't be silently overridden the way a bare `.class{display:flex}`*/
-/* rule could.                                                       */
-/* ---------------------------------------------------------------- */
+/* photo enlarge overlay */
 .photo-enlarge {
   display: none;
   position: fixed;
@@ -825,9 +792,7 @@ img { max-width: 100%; display: block; }
 }
 .photo-enlarge__close:hover { background: rgba(255,255,255,0.1); }
 
-/* ---------------------------------------------------------------- */
-/* RESPONSIVE                                                         */
-/* ---------------------------------------------------------------- */
+/* responsive */
 @media (max-width: 860px) {
   .player-layout {
     grid-template-columns: 1fr;
