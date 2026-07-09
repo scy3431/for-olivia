@@ -75,6 +75,14 @@ const photos = [
 (function () {
   "use strict";
 
+  function setVinylArt(imgEl, src) {
+    if (!imgEl) return;
+    // clear any "hide on error" state left over from a previous missing image
+    // (e.g. flipping to a Side B image that doesn't exist yet, then back to Side A)
+    imgEl.style.display = "";
+    imgEl.src = src;
+  }
+
   function applyConfig() {
     document.title = CONFIG.siteTitle;
 
@@ -88,8 +96,8 @@ const photos = [
 
     const miniArt = document.getElementById("mini-vinyl-art");
     const playerArt = document.getElementById("player-vinyl-art");
-    if (miniArt) miniArt.src = CONFIG.vinylArt;
-    if (playerArt) playerArt.src = CONFIG.vinylArt;
+    setVinylArt(miniArt, CONFIG.vinylArt);
+    setVinylArt(playerArt, CONFIG.vinylArt);
   }
 
   const screens = {
@@ -171,7 +179,7 @@ const photos = [
     const sideLabel = document.getElementById("side-label");
     const playerArt = document.getElementById("player-vinyl-art");
     if (sideLabel) sideLabel.innerHTML = "Side&nbsp;A";
-    if (playerArt) playerArt.src = CONFIG.vinylArt;
+    setVinylArt(playerArt, CONFIG.vinylArt);
     buildPlaylist();
   }
 
@@ -185,7 +193,7 @@ const photos = [
       currentSide = currentSide === "A" ? "B" : "A";
       activePlaylist = currentSide === "A" ? playlist : playlistB;
       sideLabel.innerHTML = currentSide === "A" ? "Side&nbsp;A" : "Side&nbsp;B";
-      playerArt.src = currentSide === "A" ? CONFIG.vinylArt : CONFIG.vinylArtSideB;
+      setVinylArt(playerArt, currentSide === "A" ? CONFIG.vinylArt : CONFIG.vinylArtSideB);
 
       flipBtn.classList.add("is-flipping");
       window.setTimeout(() => flipBtn.classList.remove("is-flipping"), 500);
@@ -316,71 +324,12 @@ const photos = [
     }
   }
 
-  /* synthesized needle-drop sound, no audio file needed */
-  let audioCtx = null;
-
-  function getAudioCtx() {
-    if (!audioCtx) {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return null;
-      audioCtx = new AC();
-    }
-    if (audioCtx.state === "suspended") audioCtx.resume();
-    return audioCtx;
-  }
-
-  function playNeedleDropSound() {
-    const ctx = getAudioCtx();
-    if (!ctx) return;
-
-    const now = ctx.currentTime;
-
-    // a short burst of filtered noise for the "crackle"
-    const bufferSize = ctx.sampleRate * 0.35;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 2.2);
-    }
-    const noise = ctx.createBufferSource();
-    noise.buffer = buffer;
-
-    const noiseFilter = ctx.createBiquadFilter();
-    noiseFilter.type = "bandpass";
-    noiseFilter.frequency.value = 2400;
-    noiseFilter.Q.value = 0.6;
-
-    const noiseGain = ctx.createGain();
-    noiseGain.gain.setValueAtTime(0.16, now);
-    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
-
-    noise.connect(noiseFilter).connect(noiseGain).connect(ctx.destination);
-
-    // a soft low "thud" for the stylus touching down
-    const thud = ctx.createOscillator();
-    thud.type = "sine";
-    thud.frequency.setValueAtTime(120, now);
-    thud.frequency.exponentialRampToValueAtTime(45, now + 0.12);
-
-    const thudGain = ctx.createGain();
-    thudGain.gain.setValueAtTime(0.22, now);
-    thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-
-    thud.connect(thudGain).connect(ctx.destination);
-
-    noise.start(now);
-    noise.stop(now + 0.35);
-    thud.start(now);
-    thud.stop(now + 0.16);
-  }
-
   /* visual state, tonearm movement */
   const vinylRecord = document.getElementById("vinyl-record");
   const tonearm = document.getElementById("tonearm");
   const iconPlay = document.getElementById("icon-play");
   const iconPause = document.getElementById("icon-pause");
   const btnPlay = document.getElementById("btn-play");
-  let wasPlaying = false;
 
   function setPlayingUI(isPlaying) {
     vinylRecord.classList.toggle("is-spinning", isPlaying);
@@ -388,12 +337,6 @@ const photos = [
     iconPlay.style.display = isPlaying ? "none" : "block";
     iconPause.style.display = isPlaying ? "block" : "none";
     btnPlay.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
-
-    // the needle should "land" right as the tonearm finishes its swing onto the record
-    if (isPlaying && !wasPlaying) {
-      window.setTimeout(playNeedleDropSound, 950);
-    }
-    wasPlaying = isPlaying;
   }
 
   /* play, pause, next, previous */
