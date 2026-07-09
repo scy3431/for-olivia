@@ -303,55 +303,44 @@ img { max-width: 100%; display: block; }
 /* notepad icon */
 .mini-notepad {
   position: relative;
-  width: clamp(190px, 27vw, 300px);
-  height: clamp(210px, 29vw, 320px);
+  width: clamp(200px, 30vw, 340px);
+  height: clamp(160px, 24vw, 268px);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform .35s var(--ease-spring);
 }
 
-.object-trigger--notepad:hover .mini-notepad { transform: translateY(-3px) rotate(-1.5deg); }
+.object-trigger--notepad:hover .mini-notepad { transform: translateY(-3px) rotate(2deg); }
 
 .mini-notepad__page {
   position: relative;
-  width: 74%;
-  height: 90%;
+  width: 72%;
+  height: 84%;
   background: linear-gradient(160deg, var(--cream) 0%, var(--cream-deep) 100%);
-  border-radius: 8px;
-  box-shadow: 0 10px 26px rgba(21,16,13,0.3), -5px 5px 0 rgba(74,53,39,0.14);
+  border-radius: 4px 10px 10px 4px;
+  box-shadow: 0 10px 26px rgba(21,16,13,0.3), 3px 3px 0 rgba(46,32,24,0.06);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 0.55rem;
-  padding: 22% 16% 14%;
-  overflow: hidden;
+  gap: 0.5rem;
+  padding: 0 14% 0 20%;
 }
 
-/* spiral binding across the top */
+/* spiral binding: a single repeatable ring, spaced evenly with `background-repeat: space`
+   so every ring renders as a full circle \u2014 no partial/clipped ring at the ends */
 .mini-notepad__spiral {
   position: absolute;
-  top: 9%;
-  left: 12%;
-  right: 12%;
-  height: 8%;
-  background: repeating-radial-gradient(circle at center, var(--wood) 0 2.4px, transparent 2.6px 15%);
-  opacity: 0.5;
+  left: 8%;
+  top: 6%;
+  bottom: 6%;
+  width: 8%;
+  background-image: radial-gradient(circle, var(--ink-soft) 0 2px, transparent 2.2px);
+  background-size: 100% 15px;
+  background-repeat: space;
+  opacity: 0.55;
   z-index: 1;
-}
-
-/* folded corner, scrapbook signature detail matching the gallery */
-.mini-notepad__page::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 22%;
-  height: 22%;
-  background: linear-gradient(135deg, transparent 50%, var(--beige) 50.5%);
-  box-shadow: -3px 3px 5px rgba(21,16,13,0.14);
-  border-radius: 0 8px 0 0;
 }
 
 .mini-notepad__line {
@@ -361,37 +350,29 @@ img { max-width: 100%; display: block; }
   border-radius: 1px;
 }
 
-.mini-notepad__line:nth-child(3) { width: 60%; }
+.mini-notepad__line:nth-child(3) { width: 65%; }
 
-/* a pencil resting diagonally across the page */
 .mini-notepad__pen {
   position: absolute;
-  left: 8%;
-  bottom: 14%;
-  width: 76%;
+  right: -6%;
+  bottom: 10%;
+  width: 62%;
   height: 8px;
-  border-radius: 4px 1px 1px 4px;
-  transform: rotate(-16deg);
-  transform-origin: left center;
-  background: linear-gradient(90deg,
-    var(--rose) 0 12%,
-    var(--wood) 12% 20%,
-    var(--gold) 20% 88%,
-    var(--gold-bright) 88% 100%);
-  box-shadow: 0 2px 5px rgba(21,16,13,0.28);
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--gold), var(--rose) 85%);
+  transform: rotate(-38deg);
+  box-shadow: 0 2px 5px rgba(21,16,13,0.3);
 }
 
 .mini-notepad__pen::after {
   content: "";
   position: absolute;
-  right: -7px;
-  top: 50%;
-  width: 0;
-  height: 0;
-  transform: translateY(-50%);
-  border-style: solid;
-  border-width: 4px 0 4px 7px;
-  border-color: transparent transparent transparent var(--ink);
+  right: -4px;
+  top: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 0 4px 4px 0;
+  background: var(--ink);
 }
 
 .screen-nav {
@@ -1330,5 +1311,5 @@ img { max-width: 100%; display: block; }
 @media (max-width: 380px) {
   .mini-vinyl { width: 220px; height: 220px; }
   .mini-camera { width: 220px; height: 174px; }
-  .mini-notepad { width: 190px; height: 214px; }
+  .mini-notepad { width: 220px; height: 174px; }
 }
