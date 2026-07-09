@@ -41,7 +41,7 @@ const playlist = [
 // leave youtubeId empty for a track and it'll just sit greyed-out/unplayable in the list.
 const playlistB = [
   { title: "Rosary",  youtubeId: "xTkOUOkHQfI" },
-  { title: "",  youtubeId: "" },
+  { title: "I THINK YOU'RE SPECIAL",  youtubeId: "Pk-2Ha1e2sc" },
   { title: "Big Black Car",  youtubeId: "JgumMOMHpns" },
   { title: "",  youtubeId: "" },
   { title: "",  youtubeId: "" },
