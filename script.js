@@ -18,7 +18,7 @@ const CONFIG = {
   // no server, this is a light "keep out casual visitors" gate, not real security \u2014
   // anyone who inspects the page source could find it. Fine for a private gift link,
   // just don't rely on it for anything truly sensitive.
-  journalPassword: "changeme",
+  journalPassword: "feburarysixteenth",
 };
 
 const playlist = [
@@ -107,15 +107,11 @@ const photos = [
     journal: document.getElementById("journal-screen"),
   };
 
-  function showScreen(name, keepMusic) {
+  function showScreen(name) {
     Object.entries(screens).forEach(([key, el]) => {
       if (!el) return;
       el.classList.toggle("is-active", key === name);
     });
-
-    if (name !== "player" && !keepMusic) {
-      pausePlayback();
-    }
 
     if (name !== "journal") {
       lockJournal();
@@ -145,12 +141,20 @@ const photos = [
       refreshJournalLockState();
     });
 
-    backButtons.forEach((btn) =>
-      btn.addEventListener("click", () => showScreen("home"))
-    );
+    // plain "back" buttons: only the one on the record player screen actually
+    // stops the music. Everywhere else, music (if playing) just keeps going.
+    backButtons.forEach((btn) => {
+      const stopsMusic = btn.closest("#player-screen") !== null;
+      btn.addEventListener("click", () => {
+        if (stopsMusic) pausePlayback();
+        showScreen("home");
+      });
+    });
 
+    // "back (with music)": always goes home, music keeps playing uninterrupted
+    // until the player screen is opened again.
     backKeepMusicButtons.forEach((btn) =>
-      btn.addEventListener("click", () => showScreen("home", true))
+      btn.addEventListener("click", () => showScreen("home"))
     );
   }
 
