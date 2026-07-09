@@ -150,7 +150,7 @@ const photos = [
     );
 
     backKeepMusicButtons.forEach((btn) =>
-      btn.addEventListener("click", () => showScreen("gallery", true))
+      btn.addEventListener("click", () => showScreen("home", true))
     );
   }
 
