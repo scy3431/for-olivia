@@ -214,7 +214,7 @@
   <div class="journal-composer" id="journal-composer" hidden>
     <div class="journal-composer__card">
       <label class="journal-composer__date" for="journal-composer-date">Date</label>
-      <input type="text" id="journal-composer-date" class="journal-composer__date-input" />
+      <input type="date" id="journal-composer-date" class="journal-composer__date-input" />
 
       <label class="journal-composer__label" for="journal-composer-text">Today, I wanted to tell you&hellip;</label>
       <textarea id="journal-composer-text" class="journal-composer__text" rows="8"></textarea>
@@ -226,24 +226,21 @@
     </div>
   </div>
 
-  <!-- snippet output, so the entry can be committed permanently -->
-  <div class="journal-snippet" id="journal-snippet" hidden>
-    <div class="journal-snippet__card">
-      <p class="journal-snippet__title">Saved for now &mdash; to keep it forever:</p>
-      <p class="journal-snippet__instructions">
-        Copy the snippet below and paste it into the <code>journalEntries</code> array
-        near the top of <code>script.js</code>, then commit and redeploy. Until then,
-        this entry only lives in this browser tab as a preview.
-      </p>
-      <textarea id="journal-snippet-text" class="journal-snippet__textarea" rows="6" readonly></textarea>
-      <div class="journal-snippet__actions">
-        <button type="button" class="journal-snippet__copy" id="journal-snippet-copy">copy snippet</button>
-        <button type="button" class="journal-snippet__done" id="journal-snippet-done">done</button>
-      </div>
-    </div>
-  </div>
+  <!-- brief confirmation toast after saving, no code shown -->
+  <div class="journal-toast" id="journal-toast" hidden></div>
 
 </section>
+
+<!-- journal entry viewer (opened from a calendar day) -->
+<div id="journal-entry-view" class="letter-overlay" hidden>
+  <button class="letter-overlay__close" id="journal-entry-view-close" aria-label="Close entry">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </button>
+  <div class="letter-overlay__paper">
+    <p class="journal-entry-view__date" id="journal-entry-view-date"></p>
+    <p class="letter-overlay__text" id="journal-entry-view-text"></p>
+  </div>
+</div>
 
 <!-- photo enlarge overlay -->
 <div id="photo-enlarge" class="photo-enlarge" hidden>
