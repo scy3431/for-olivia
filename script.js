@@ -41,19 +41,20 @@ const playlist = [
 // Side B \u2014 shown after flipping the record. Fill these in with your own picks;
 // leave youtubeId empty for a track and it'll just sit greyed-out/unplayable in the list.
 const playlistB = [
-  { title: "Human Nature",  youtubeId: "YNzuiRuQNYY" },
-  { title: "Rosary",  youtubeId: "xTkOUOkHQfI" },
-  { title: "I THINK YOU'RE SPECIAL",  youtubeId: "Pk-2Ha1e2sc" },
-  { title: "Big Black Car",  youtubeId: "JgumMOMHpns" },
-  { title: "Road Trips",  youtubeId: "HhS8eJES-C8" },
-  { title: "Orange Juice",  youtubeId: "WtKTfzNcX9Y" },
-  { title: "",  youtubeId: "" },
-  { title: "",  youtubeId: "" },
-  { title: "",  youtubeId: "" },
-  { title: "",  youtubeId: "" },
-  { title: "",  youtubeId: "" },
-  { title: "",  youtubeId: "" },
-  { title: "",  youtubeId: "" },
+  { title: "Human Nature",   youtubeId: "YNzuiRuQNYY" },
+  { title: "Rosary",   youtubeId: "xTkOUOkHQfI" },
+  { title: "I THINK YOU'RE SPECIAL",   youtubeId: "Pk-2Ha1e2sc" },
+  { title: "Big Black Car",   youtubeId: "JgumMOMHpns" },
+  { title: "Road Trips",   youtubeId: "HhS8eJES-C8" },
+  { title: "Orange Juice",   youtubeId: "WtKTfzNcX9Y" },
+  { title: "",   youtubeId: "" },
+  { title: "",   youtubeId: "" },
+  { title: "",   youtubeId: "" },
+  { title: "",   youtubeId: "" },
+  { title: "",   youtubeId: "" },
+  { title: "",   youtubeId: "" },
+  { title: "",   youtubeId: "" },
+  { title: "",   youtubeId: ""
 ];
 
 const photos = [
