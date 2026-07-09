@@ -18,7 +18,7 @@ const CONFIG = {
   // no server, this is a light "keep out casual visitors" gate, not real security \u2014
   // anyone who inspects the page source could find it. Fine for a private gift link,
   // just don't rely on it for anything truly sensitive.
-  journalPassword: "feburarysixteenth",
+  journalPassword: "februarysixteenth",
 };
 
 const playlist = [
