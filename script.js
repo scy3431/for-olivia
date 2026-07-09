@@ -69,6 +69,7 @@ const photos = [
   { src: "assets/images/photo11.jpg", caption: "" },
   { src: "assets/images/photo12.jpg", caption: "" },
   { src: "assets/images/photo13.jpg", caption: "" },
+  { src: "assets/images/photo14.jpg", caption: "" },
 ];
 
 
