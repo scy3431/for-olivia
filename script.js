@@ -40,7 +40,7 @@ const playlist = [
 // Side B \u2014 shown after flipping the record. Fill these in with your own picks;
 // leave youtubeId empty for a track and it'll just sit greyed-out/unplayable in the list.
 const playlistB = [
-  { title: "",  youtubeId: "" },
+  { title: "Rosary",  youtubeId: "xTkOUOkHQfI" },
   { title: "",  youtubeId: "" },
   { title: "",  youtubeId: "" },
   { title: "",  youtubeId: "" },
