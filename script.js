@@ -22,18 +22,19 @@ const CONFIG = {
 };
 
 const playlist = [
-  { title: "Waking Up Slow",      youtubeId: "cTSdJEGswtg" },
-  { title: "Flightless Bird, American Mouth",      youtubeId: "RGVmhrfQqzg" },
-  { title: "Stay Love",    youtubeId: "hLWLS-Csppw" },
-  { title: "Ordinary",     youtubeId: "NaZznqme2hg" },
   { title: "Sweet Love",     youtubeId: "Q-p2mVc8qsQ" },
-  { title: "Iris",      youtubeId: "hpy8F9uzqv0" },
+  { title: "Bloom",      youtubeId: "8inJtTG_DuU" },
+  { title: "Ordinary",     youtubeId: "NaZznqme2hg" },
+  { title: "Waking Up Slow",      youtubeId: "cTSdJEGswtg" },
+  { title: "Tenerife Sea", youtubeId: "2tHes1FQfwU" },
+  { title: "Cherry Wine",   youtubeId: "1o00J04ThXQ" },
+  { title: "Stay Love",    youtubeId: "hLWLS-Csppw" },
   { title: "Bad Dreams",    youtubeId: "iMIZf1YY0zs" },
   { title: "Runnin' Home to You",    youtubeId: "f4a1vf7l-jI" },
-  { title: "San Luis",     youtubeId: "7BJ7MDOmLPE" },
-  { title: "Bloom",      youtubeId: "8inJtTG_DuU" },
+  { title: "Iris",      youtubeId: "hpy8F9uzqv0" },
   { title: "Amsterdam",   youtubeId: "lz2qpnRB5_E" },
-  { title: "Tenerife Sea", youtubeId: "2tHes1FQfwU" },
+  { title: "San Luis",     youtubeId: "7BJ7MDOmLPE" },
+  { title: "Flightless Bird, American Mouth",      youtubeId: "RGVmhrfQqzg" },
   { title: "If We Were Vampires",   youtubeId: "246pND4SGXk" },
 ];
 
