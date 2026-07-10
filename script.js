@@ -47,7 +47,7 @@ const playlistB = [
   { title: "Big Black Car",   youtubeId: "JgumMOMHpns" },
   { title: "Road Trips",   youtubeId: "HhS8eJES-C8" },
   { title: "Orange Juice",   youtubeId: "WtKTfzNcX9Y" },
-  { title: "",   youtubeId: "" },
+  { title: "Treat You Better",   youtubeId: "29bfaHc1XiY" },
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
