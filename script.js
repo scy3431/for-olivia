@@ -49,7 +49,7 @@ const playlistB = [
   { title: "Orange Juice",   youtubeId: "WtKTfzNcX9Y" },
   { title: "Treat You Better",   youtubeId: "29bfaHc1XiY" },
   { title: "Floating",   youtubeId: "m8t5mqYO9Yc" },
-  { title: "",   youtubeId: "" },
+  { title: "LA FAMA",   youtubeId: "BwBVEB3jGLs" },
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
