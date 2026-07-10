@@ -54,7 +54,7 @@ const playlistB = [
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
-  { title: "",   youtubeId: ""
+  { title: "",   youtubeId: "" },
 ];
 
 const photos = [
