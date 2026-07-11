@@ -41,7 +41,7 @@ const playlistB = [
   { title: "LA FAMA",   youtubeId: "BwBVEB3jGLs" },
   { title: "Dive",   youtubeId: "NM4e606yFJg" },
   { title: "The View Between Villages",   youtubeId: "y819MUCmJmw" },
-  { title: "",   youtubeId: "" },
+  { title: "Sertraline",   youtubeId: "872vgltW1VI" },
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
 ];
