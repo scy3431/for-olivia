@@ -1,23 +1,14 @@
 const CONFIG = {
-  // The title shown in the browser tab
-  siteTitle: "Gift for my love",
+  siteTitle: "A Gift For My Love",
 
   backgroundImage: "",
 
-  // Side A art. Shown by default.
   vinylArt: "assets/images/album.jpg",
-  // Side B art, shown after clicking "flip". Add a second image and update this path.
   vinylArtSideB: "assets/images/album-b.jpg",
 
-  // The message revealed when the hidden letter (bottom-right of the gallery) is opened.
-  // Use \n\n for paragraph breaks.
   hiddenLetterText:
-    "If you found this, you weren't just looking at the photos \u2014 you were looking closely.\n\nThat's kind of the whole point of us.",
+    "Hi baby, if you find this, I want you to know that... I LOVE YOUUUUUUUU :). You're so cute and beautiful and sexy and amazing.",
 
-  // Simple passphrase gating the journal. NOTE: since this is a static site with
-  // no server, this is a light "keep out casual visitors" gate, not real security \u2014
-  // anyone who inspects the page source could find it. Fine for a private gift link,
-  // just don't rely on it for anything truly sensitive.
   journalPassword: "februarysixteenth",
 };
 
@@ -38,8 +29,6 @@ const playlist = [
   { title: "If We Were Vampires",   youtubeId: "246pND4SGXk" },
 ];
 
-// Side B \u2014 shown after flipping the record. Fill these in with your own picks;
-// leave youtubeId empty for a track and it'll just sit greyed-out/unplayable in the list.
 const playlistB = [
   { title: "Human Nature",   youtubeId: "YNzuiRuQNYY" },
   { title: "Rosary",   youtubeId: "xTkOUOkHQfI" },
@@ -421,7 +410,7 @@ const photos = [
     });
   }
 
-  /* hidden letter easter egg */
+  /* hidden letter */
   const letterOverlay = document.getElementById("letter-overlay");
   const letterText = document.getElementById("letter-overlay-text");
 
@@ -517,7 +506,7 @@ const photos = [
     "July", "August", "September", "October", "November", "December",
   ];
 
-  // Parses "YYYY-MM-DD" without timezone surprises. Returns null if unparseable.
+  // Parses "YYYY-MM-DD" without timezone surprises, returns null if unparseable.
   function parseIsoDate(str) {
     if (typeof str !== "string") return null;
     const m = str.match(/^(\d{4})-(\d{2})-(\d{2})$/);
