@@ -40,7 +40,7 @@ const playlistB = [
   { title: "Floating",   youtubeId: "m8t5mqYO9Yc" },
   { title: "LA FAMA",   youtubeId: "BwBVEB3jGLs" },
   { title: "Dive",   youtubeId: "NM4e606yFJg" },
-  { title: "",   youtubeId: "" },
+  { title: "The View Between Villages",   youtubeId: "y819MUCmJmw" },
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
   { title: "",   youtubeId: "" },
