@@ -359,7 +359,7 @@ const photos = [
 
       const img = document.createElement("img");
       img.src = photo.src;
-      img.loading = "lazy";
+      img.loading = "eager";
       img.decoding = "async";
       img.alt = photo.caption || `Photograph ${i + 1}`;
       img.onerror = function () {
