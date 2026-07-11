@@ -7,7 +7,7 @@ const CONFIG = {
   vinylArtSideB: "assets/images/album-b.jpg",
 
   hiddenLetterText:
-    "Hi baby, if you find this, I want you to know that... I LOVE YOUUUUUUUU :). You're so cute and beautiful and sexy and amazing.",
+    "Hi baby, if you find this, I want you to know that... I LOVE YOUUUUUUUU :). You're so cute and beautiful and sexy and amazing. Happy 14th Monthaversary!",
 
   journalPassword: "februarysixteenth",
 };
