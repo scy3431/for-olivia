@@ -31,19 +31,19 @@ const playlist = [
 
 const playlistB = [
   { title: "Human Nature",   youtubeId: "YNzuiRuQNYY" },
-  { title: "Rosary",   youtubeId: "xTkOUOkHQfI" },
-  { title: "I THINK YOU'RE SPECIAL",   youtubeId: "Pk-2Ha1e2sc" },
   { title: "Big Black Car",   youtubeId: "JgumMOMHpns" },
   { title: "Road Trips",   youtubeId: "HhS8eJES-C8" },
-  { title: "Orange Juice",   youtubeId: "WtKTfzNcX9Y" },
   { title: "Treat You Better",   youtubeId: "29bfaHc1XiY" },
-  { title: "Floating",   youtubeId: "m8t5mqYO9Yc" },
-  { title: "LA FAMA",   youtubeId: "BwBVEB3jGLs" },
   { title: "Dive",   youtubeId: "NM4e606yFJg" },
-  { title: "The View Between Villages",   youtubeId: "y819MUCmJmw" },
-  { title: "Sertraline",   youtubeId: "872vgltW1VI" },
+  { title: "LA FAMA",   youtubeId: "BwBVEB3jGLs" },
+  { title: "I THINK YOU'RE SPECIAL",   youtubeId: "Pk-2Ha1e2sc" },
   { title: "One More I Love You",   youtubeId: "tIiP6LkYSbE" },
   { title: "The Hardest Part",   youtubeId: "ujjf3nnIUC" },
+  { title: "Orange Juice",   youtubeId: "WtKTfzNcX9Y" },
+  { title: "Sertraline",   youtubeId: "872vgltW1VI" },
+  { title: "The View Between Villages",   youtubeId: "y819MUCmJmw" },
+  { title: "Rosary",   youtubeId: "xTkOUOkHQfI" },
+  { title: "Floating",   youtubeId: "m8t5mqYO9Yc" },
 ];
 
 const photos = [
