@@ -42,8 +42,8 @@ const playlistB = [
   { title: "Dive",   youtubeId: "NM4e606yFJg" },
   { title: "The View Between Villages",   youtubeId: "y819MUCmJmw" },
   { title: "Sertraline",   youtubeId: "872vgltW1VI" },
-  { title: "",   youtubeId: "" },
-  { title: "",   youtubeId: "" },
+  { title: "One More I Love You",   youtubeId: "tIiP6LkYSbE" },
+  { title: "The Hardest Part",   youtubeId: "ujjf3nnIUC" },
 ];
 
 const photos = [
