@@ -9,7 +9,9 @@ const CONFIG = {
   hiddenLetterText:
     "Hi baby, if you find this, I want you to know that... I LOVE YOUUUUUUUU :). You're so cute and beautiful and sexy and amazing. Happy 14th Monthaversary!",
 
-  journalPassword: "februarysixteenth",
+  journalApiUrl: "https://script.google.com/macros/s/AKfycbxr9QqtAMQpg0GmzTCdKuHTGcvLaZJ_XvSeNQZ1Bi2wc3oZke_SETfnUERzge9252gTnA/exec",
+
+  journalPasswordEncoded: "ZmVicnVhcnlzaXh0ZWVudGg=",
 };
 
 const playlist = [
@@ -432,15 +434,19 @@ const photos = [
     });
   }
 
-  /* journal: password gate (re-asked every visit), JSON-backed entries, calendar view */
-  const JOURNAL_DATA_URL = "assets/data/journal.json";
-  let journalEntries = [];       // loaded from journal.json at startup
-  let previewEntries = [];       // entries added this session, not yet in the downloaded file
+  /* journal: password gate (re-asked every visit), entries live in a Google Sheet,
+     read and written through a small Apps Script web app (see APPS_SCRIPT.gs) */
+  let journalEntries = [];       // loaded from the Sheet at startup
   let journalUnlockedThisVisit = false;
   let journalDataLoaded = false;
 
   function loadJournalData() {
-    fetch(JOURNAL_DATA_URL, { cache: "no-store" })
+    if (!CONFIG.journalApiUrl || CONFIG.journalApiUrl.indexOf("PASTE_YOUR") === 0) {
+      journalEntries = [];
+      journalDataLoaded = true;
+      return;
+    }
+    fetch(CONFIG.journalApiUrl, { cache: "no-store" })
       .then((res) => (res.ok ? res.json() : []))
       .then((data) => {
         journalEntries = Array.isArray(data) ? data : [];
@@ -482,7 +488,7 @@ const photos = [
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      if (input.value === CONFIG.journalPassword) {
+      if (input.value === atob(CONFIG.journalPasswordEncoded)) {
         error.hidden = true;
         input.value = "";
         journalUnlockedThisVisit = true;
@@ -545,9 +551,7 @@ const photos = [
     if (!container) return;
     container.innerHTML = "";
 
-    const combined = journalEntries
-      .map((e) => ({ ...e, isPreview: false }))
-      .concat(previewEntries.map((e) => ({ ...e, isPreview: true })));
+    const combined = journalEntries;
 
     const scheduled = combined.filter((e) => parseIsoDate(e.date));
     const undated = combined.filter((e) => !parseIsoDate(e.date));
@@ -614,9 +618,7 @@ const photos = [
         const dayEntries = entriesByDay.get(day);
 
         if (dayEntries && dayEntries.length) {
-          const anyPreview = dayEntries.some((e) => e.isPreview);
-          cell.className = "journal-calendar-day journal-calendar-day--has-entry" +
-            (anyPreview ? " journal-calendar-day--preview" : "");
+          cell.className = "journal-calendar-day journal-calendar-day--has-entry";
           cell.setAttribute("role", "button");
           cell.setAttribute("tabindex", "0");
           cell.setAttribute("aria-label", `Read journal entry for ${MONTH_LABELS[group.month]} ${day}`);
@@ -671,16 +673,17 @@ const photos = [
     showJournalToast._t = window.setTimeout(() => { toast.hidden = true; }, 4200);
   }
 
-  function downloadJournalJson(entries) {
-    const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "journal.json";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  function saveEntryToSheet(entry) {
+    return fetch(CONFIG.journalApiUrl, {
+      method: "POST",
+      // text/plain avoids a CORS preflight that Apps Script web apps don't handle;
+      // the Apps Script side still parses this body as JSON.
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(entry),
+    }).then((res) => {
+      if (!res.ok) throw new Error("Request failed");
+      return res.json();
+    });
   }
 
   function initJournalComposer() {
@@ -724,15 +727,27 @@ const photos = [
         return;
       }
 
-      previewEntries.push({ date, text });
-      closeComposer();
-      buildJournalCalendar();
+      if (!CONFIG.journalApiUrl || CONFIG.journalApiUrl.indexOf("PASTE_YOUR") === 0) {
+        showJournalToast("No Google Sheet connected yet \u2014 set journalApiUrl in script.js first.");
+        return;
+      }
 
-      const fullEntries = journalEntries.concat(previewEntries);
-      downloadJournalJson(fullEntries);
-      showJournalToast(
-        "Saved here as a preview \u2014 journal.json just downloaded. Replace assets/data/journal.json with it and push to make it permanent."
-      );
+      saveBtn.disabled = true;
+      saveBtn.textContent = "saving\u2026";
+
+      saveEntryToSheet({ date, text })
+        .then(() => {
+          closeComposer();
+          showJournalToast("Saved \u2014 it's live for both of you now.");
+          loadJournalData(); // pulls the fresh, authoritative list back from the Sheet
+        })
+        .catch(() => {
+          showJournalToast("Couldn't save that entry \u2014 check your connection and try again.");
+        })
+        .finally(() => {
+          saveBtn.disabled = false;
+          saveBtn.textContent = "save entry";
+        });
     });
   }
 
