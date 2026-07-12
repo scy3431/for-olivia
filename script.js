@@ -60,7 +60,7 @@ const photos = [
   { src: "assets/images/photo11.jpg", caption: "Eat your damn macaron!" },
   { src: "assets/images/photo12.jpg", caption: "Ugh, butterbeer!" },
   { src: "assets/images/photo13.jpg", caption: "WE ARE THE CUTEST!" },
-  { src: "assets/images/photo14.jpg", caption: "My perfect, gorgeous girl one more time." },
+  { src: "assets/images/photo14.jpg", caption: "My perfect, gorgeous girl, one more time." },
   { src: "assets/images/photo15.jpg", caption: "One more because I liked it ;)" },
 ];
 
