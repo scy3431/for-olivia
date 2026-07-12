@@ -738,7 +738,7 @@ const photos = [
       saveEntryToSheet({ date, text })
         .then(() => {
           closeComposer();
-          showJournalToast("Saved \u2014 it's live for both of you now.");
+          showJournalToast("Saved!");
           loadJournalData(); // pulls the fresh, authoritative list back from the Sheet
         })
         .catch(() => {
