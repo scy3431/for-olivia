@@ -47,20 +47,20 @@ const playlistB = [
 ];
 
 const photos = [
-  { src: "assets/images/photo1.jpg",  caption: "" },
-  { src: "assets/images/photo2.jpg",  caption: "" },
-  { src: "assets/images/photo3.jpg",  caption: "" },
-  { src: "assets/images/photo4.jpg",  caption: "" },
-  { src: "assets/images/photo5.jpg",  caption: "" },
-  { src: "assets/images/photo6.jpg",  caption: "" },
-  { src: "assets/images/photo7.jpg",  caption: "" },
-  { src: "assets/images/photo8.jpg",  caption: "" },
-  { src: "assets/images/photo9.jpg",  caption: "" },
-  { src: "assets/images/photo10.jpg", caption: "" },
-  { src: "assets/images/photo11.jpg", caption: "" },
-  { src: "assets/images/photo12.jpg", caption: "" },
-  { src: "assets/images/photo13.jpg", caption: "" },
-  { src: "assets/images/photo14.jpg", caption: "" },
+  { src: "assets/images/photo1.jpg",  caption: "We need to come back here!" },
+  { src: "assets/images/photo2.jpg",  caption: "One of our first times in Westhampton together. (Criminal offensive side-eye)." },
+  { src: "assets/images/photo3.jpg",  caption: "Put that tongue away!" },
+  { src: "assets/images/photo4.jpg",  caption: "We were staying in Paris." },
+  { src: "assets/images/photo5.jpg",  caption: "Oh my god we're so tan!" },
+  { src: "assets/images/photo6.jpg",  caption: "You are gorgeous." },
+  { src: "assets/images/photo7.jpg",  caption: "I have no idea, but you look beautiful." },
+  { src: "assets/images/photo8.jpg",  caption: "MATCHA BEIGNETS!!!" },
+  { src: "assets/images/photo9.jpg",  caption: "Can we watch more sunsets together please?" },
+  { src: "assets/images/photo10.jpg", caption: "Yup, still gorgeous." },
+  { src: "assets/images/photo11.jpg", caption: "Eat your damn macaron!" },
+  { src: "assets/images/photo12.jpg", caption: "Ugh, butterbeer!" },
+  { src: "assets/images/photo13.jpg", caption: "WE ARE THE CUTEST!" },
+  { src: "assets/images/photo14.jpg", caption: "My perfect, gorgeous girl one more time." },
   { src: "assets/images/photo15.jpg", caption: "One more because I liked it ;)" },
 ];
 
@@ -70,8 +70,6 @@ const photos = [
 
   function setVinylArt(imgEl, src) {
     if (!imgEl) return;
-    // clear any "hide on error" state left over from a previous missing image
-    // (e.g. flipping to a Side B image that doesn't exist yet, then back to Side A)
     imgEl.style.display = "";
     imgEl.src = src;
   }
@@ -134,8 +132,6 @@ const photos = [
       refreshJournalLockState();
     });
 
-    // plain "back" buttons: only the one on the record player screen actually
-    // stops the music. Everywhere else, music (if playing) just keeps going.
     backButtons.forEach((btn) => {
       const stopsMusic = btn.closest("#player-screen") !== null;
       btn.addEventListener("click", () => {
@@ -144,8 +140,6 @@ const photos = [
       });
     });
 
-    // "back (with music)": always goes home, music keeps playing uninterrupted
-    // until the player screen is opened again.
     backKeepMusicButtons.forEach((btn) =>
       btn.addEventListener("click", () => showScreen("home"))
     );
@@ -161,7 +155,6 @@ const photos = [
     });
   }
 
-  /* playlist ui \u2014 activePlaylist points at either `playlist` (Side A) or `playlistB` (Side B) */
   const playlistEl = document.getElementById("playlist");
   let currentIndex = 0;
   let activePlaylist = playlist;
