@@ -517,15 +517,32 @@ const photos = [
     return d;
   }
 
-  function openJournalEntryView(entry) {
+  // Renders one or more entries for a single day, with a thin divider between
+  // separate entries so two entries on the same day never read as one blob.
+  function openJournalEntryView(entries) {
     const overlay = document.getElementById("journal-entry-view");
     const dateEl = document.getElementById("journal-entry-view-date");
     const textEl = document.getElementById("journal-entry-view-text");
-    const parsed = parseIsoDate(entry.date);
+
+    const list = Array.isArray(entries) ? entries : [entries];
+    const parsed = parseIsoDate(list[0].date);
     dateEl.textContent = parsed
       ? parsed.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
-      : (entry.date || "Undated");
-    textEl.textContent = entry.text || "";
+      : (list[0].date || "Undated");
+
+    textEl.innerHTML = "";
+    list.forEach((entry, i) => {
+      if (i > 0) {
+        const divider = document.createElement("hr");
+        divider.className = "journal-entry-divider";
+        textEl.appendChild(divider);
+      }
+      const p = document.createElement("p");
+      p.className = "journal-entry-view__entry";
+      p.textContent = entry.text || "";
+      textEl.appendChild(p);
+    });
+
     overlay.hidden = false;
     document.body.style.overflow = "hidden";
   }
@@ -622,10 +639,7 @@ const photos = [
           cell.setAttribute("role", "button");
           cell.setAttribute("tabindex", "0");
           cell.setAttribute("aria-label", `Read journal entry for ${MONTH_LABELS[group.month]} ${day}`);
-          const openThisDay = () => {
-            const combinedText = dayEntries.map((e) => e.text).join("\n\n");
-            openJournalEntryView({ date: dayEntries[0].date, text: combinedText });
-          };
+          const openThisDay = () => openJournalEntryView(dayEntries);
           cell.addEventListener("click", openThisDay);
           cell.addEventListener("keydown", (e) => {
             if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openThisDay(); }
@@ -674,15 +688,18 @@ const photos = [
   }
 
   function saveEntryToSheet(entry) {
+    // Apps Script web apps don't reliably send the Access-Control-Allow-Origin
+    // header on POST responses. In normal "cors" mode, that makes the browser
+    // reject the fetch entirely before we even see a response \u2014 which is why
+    // saving looked like it was silently failing. "no-cors" mode still sends
+    // the request through and lets Apps Script process it; we just can't read
+    // the response back (it comes through as "opaque"). Since we immediately
+    // reload the real list from the Sheet afterward anyway, that's fine here.
     return fetch(CONFIG.journalApiUrl, {
       method: "POST",
-      // text/plain avoids a CORS preflight that Apps Script web apps don't handle;
-      // the Apps Script side still parses this body as JSON.
+      mode: "no-cors",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(entry),
-    }).then((res) => {
-      if (!res.ok) throw new Error("Request failed");
-      return res.json();
     });
   }
 
