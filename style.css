@@ -24,7 +24,6 @@
   --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
 }
 
-/* reset and base */
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body {
@@ -51,7 +50,6 @@ button {
 
 img { max-width: 100%; display: block; }
 
-/* subtle paper grain across the whole app, purely decorative */
 .grain-overlay {
   position: fixed;
   inset: 0;
@@ -65,7 +63,6 @@ img { max-width: 100%; display: block; }
   background-size: 3px 3px, 5px 5px;
 }
 
-/* reduced-motion preferences throughout */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -74,8 +71,6 @@ img { max-width: 100%; display: block; }
   }
 }
 
-
-/* screen page management */
 .screen {
   position: fixed;
   inset: 0;
@@ -94,8 +89,6 @@ img { max-width: 100%; display: block; }
   transition: opacity .55s var(--ease-soft), visibility 0s linear 0s;
 }
 
-
-/* home screen */
 .screen--home {
   display: flex;
   flex-direction: column;
@@ -170,7 +163,6 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
 }
 
-/* vinyl icon spinning continuously */
 .mini-vinyl {
   position: relative;
   width: clamp(200px, 30vw, 340px);
@@ -211,7 +203,6 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(115deg, rgba(255,255,255,0.16) 0%, transparent 32%);
 }
 
-/* camera icon */
 .mini-camera {
   position: relative;
   width: clamp(200px, 30vw, 340px);
@@ -299,8 +290,6 @@ img { max-width: 100%; display: block; }
   100% { opacity: 0; transform: scale(1.6); }
 }
 
-
-/* notepad icon */
 .mini-notepad {
   position: relative;
   width: clamp(200px, 30vw, 340px);
@@ -328,8 +317,6 @@ img { max-width: 100%; display: block; }
   padding: 0 14% 0 20%;
 }
 
-/* spiral binding: a single repeatable ring, spaced evenly with `background-repeat: space`
-   so every ring renders as a full circle \u2014 no partial/clipped ring at the ends */
 .mini-notepad__spiral {
   position: absolute;
   left: 8%;
@@ -403,14 +390,12 @@ img { max-width: 100%; display: block; }
 .back-button--dark { color: var(--cream); background: rgba(21,16,13,0.6); }
 .back-button--dark:hover { background: rgba(21,16,13,0.8); }
 
-
 .back-button--music {
   background: rgba(198,161,91,0.28);
   color: var(--gold-bright);
 }
 .back-button--music:hover { background: rgba(198,161,91,0.42); }
 
-/* record player screen */
 .screen--player {
   background:
     radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.10), transparent 60%),
@@ -458,7 +443,6 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 
-/* Pair of speed-selector dots, lower-right of the plinth (33 / 45) */
 .turntable::after {
   content: "";
   position: absolute;
@@ -542,7 +526,6 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 0 4px rgba(0,0,0,0.5);
 }
 
-/* tonearm interaction: lifts and settles */
 .tonearm {
   position: absolute;
   top: 6%;
@@ -618,7 +601,6 @@ img { max-width: 100%; display: block; }
   min-height: 1.6em;
 }
 
-/* liner notes / playlist panel */
 .liner-notes {
   background: var(--cream);
   color: var(--ink);
@@ -631,7 +613,6 @@ img { max-width: 100%; display: block; }
 }
 
 .liner-notes::before {
-  /* torn / deckled top edge, scrapbook feel */
   content: "";
   position: absolute;
   top: -6px;
@@ -724,7 +705,6 @@ img { max-width: 100%; display: block; }
 }
 .playlist__item.is-active .playlist__button::before { color: var(--rose); }
 
-/* transport controls bar */
 .controls-bar {
   width: 100%;
   max-width: 980px;
@@ -772,7 +752,6 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
-/* gallery screen */
 .screen--gallery {
   background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
   padding: clamp(4.5rem, 10vh, 6rem) clamp(1.2rem, 5vw, 3.5rem) 4rem;
@@ -821,7 +800,6 @@ img { max-width: 100%; display: block; }
   display: block;
 }
 
-/* washi-tape corner, scrapbook signature detail */
 .gallery-item::before {
   content: "";
   position: absolute;
@@ -842,7 +820,6 @@ img { max-width: 100%; display: block; }
   cursor: zoom-in;
 }
 
-/* photo enlarge overlay */
 .photo-enlarge {
   display: none;
   position: fixed;
@@ -903,7 +880,6 @@ img { max-width: 100%; display: block; }
 }
 .photo-enlarge__close:hover { background: rgba(255,255,255,0.1); }
 
-/* hidden letter easter egg, tucked in the gallery corner */
 .hidden-letter {
   position: fixed;
   right: clamp(1rem, 4vw, 2.5rem);
@@ -934,7 +910,6 @@ img { max-width: 100%; display: block; }
   50%      { transform: rotate(-3deg) translateY(-3px); }
 }
 
-/* expanded letter overlay */
 .letter-overlay {
   display: none;
   position: fixed;
@@ -994,14 +969,12 @@ img { max-width: 100%; display: block; }
 }
 .letter-overlay__close:hover { background: rgba(255,255,255,0.1); }
 
-/* journal screen */
 .screen--journal {
   background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 100%);
   padding: clamp(4.5rem, 10vh, 6rem) clamp(1.2rem, 5vw, 3.5rem) 4rem;
   overflow-y: auto;
 }
 
-/* password lock */
 .journal-lock {
   max-width: 420px;
   margin: 2rem auto 0;
@@ -1052,7 +1025,6 @@ img { max-width: 100%; display: block; }
   font-size: 0.85rem;
 }
 
-/* unlocked contents */
 .journal-content {
   max-width: 720px;
   margin: 0 auto;
@@ -1074,7 +1046,6 @@ img { max-width: 100%; display: block; }
 }
 .journal-add-button:hover { background: var(--gold-bright); transform: scale(1.06); }
 
-/* calendar of entries, grouped by month */
 .journal-calendar-month {
   margin-bottom: 1.8rem;
 }
@@ -1160,7 +1131,6 @@ img { max-width: 100%; display: block; }
   margin-top: 2rem;
 }
 
-/* entry-view modal reuses .letter-overlay; just style the date line */
 .journal-entry-view__date {
   font-family: var(--font-display);
   font-style: italic;
@@ -1170,7 +1140,17 @@ img { max-width: 100%; display: block; }
   margin: 0 0 0.9rem;
 }
 
-/* composer overlay */
+.journal-entry-view__entry {
+  margin: 0;
+}
+
+.journal-entry-divider {
+  border: none;
+  border-top: 1px solid var(--paper-line);
+  width: 55%;
+  margin: 1.15rem auto;
+}
+
 .journal-composer {
   display: none;
   position: fixed;
@@ -1266,7 +1246,6 @@ img { max-width: 100%; display: block; }
 }
 .journal-composer__save:hover { background: var(--wood-light); }
 
-/* brief confirmation toast after saving */
 .journal-toast {
   position: fixed;
   left: 50%;
@@ -1289,7 +1268,6 @@ img { max-width: 100%; display: block; }
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* responsive */
 @media (max-width: 860px) {
   .player-layout {
     grid-template-columns: 1fr;
