@@ -10,7 +10,6 @@
 <link rel="icon" href="assets/icons/favicon.ico" sizes="any" />
 <link rel="apple-touch-icon" href="assets/icons/favicon.png" />
 
-<!-- Google Fonts: Cormorant Garamond (display serif) + Jost (clean sans) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -21,14 +20,9 @@
 
 <div class="grain-overlay" aria-hidden="true"></div>
 
-<!-- Home screen -->
 <main id="home-screen" class="screen screen--home is-active" aria-label="Home">
-
   <div class="home-backdrop" id="home-backdrop"></div>
-
   <div class="home-objects">
-
-    <!-- Icon 1: Vinyl record -->
     <button class="object-trigger object-trigger--vinyl" id="open-player" aria-label="Open the record player">
       <span class="tabletop-shadow" aria-hidden="true"></span>
       <span class="mini-vinyl" aria-hidden="true">
@@ -41,7 +35,6 @@
       <span class="object-caption">record player</span>
     </button>
 
-    <!-- Icon 2: Camera -->
     <button class="object-trigger object-trigger--camera" id="open-gallery" aria-label="Open the photograph gallery">
       <span class="tabletop-shadow" aria-hidden="true"></span>
       <span class="mini-camera" aria-hidden="true">
@@ -57,7 +50,6 @@
       <span class="object-caption">photographs</span>
     </button>
 
-    <!-- Icon 3: Notepad / journal -->
     <button class="object-trigger object-trigger--notepad" id="open-journal" aria-label="Open the journal">
       <span class="tabletop-shadow" aria-hidden="true"></span>
       <span class="mini-notepad" aria-hidden="true">
@@ -71,13 +63,10 @@
       </span>
       <span class="object-caption">journal</span>
     </button>
-
   </div>
 </main>
 
-<!-- Record player screen -->
 <section id="player-screen" class="screen screen--player" aria-label="Record player">
-
   <div class="screen-nav">
     <button class="back-button" data-back aria-label="Back to home">
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 4L7 12L15 20" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -90,12 +79,9 @@
   </div>
 
   <div class="player-layout">
-
-    <!-- Turntable design -->
     <div class="turntable-wrap">
       <div class="turntable">
         <div class="turntable__plinth-shine" aria-hidden="true"></div>
-
         <div class="platter">
           <div class="vinyl-record" id="vinyl-record">
             <div class="vinyl-record__grooves"></div>
@@ -106,7 +92,6 @@
           </div>
           <div class="spindle" aria-hidden="true"></div>
         </div>
-
         <div class="tonearm" id="tonearm">
           <div class="tonearm__base"></div>
           <div class="tonearm__pivot">
@@ -115,10 +100,8 @@
             </div>
           </div>
         </div>
-
         <div class="tonearm-rest" aria-hidden="true"></div>
       </div>
-
       <p class="now-playing" id="now-playing">Choose a song to begin</p>
     </div>
 
@@ -137,7 +120,6 @@
     </aside>
   </div>
 
-  <!-- previous, play/pause, next -->
   <div class="controls-bar">
     <div class="controls-bar__buttons">
       <button class="ctrl-btn ctrl-btn--prev" id="btn-prev" aria-label="Previous song" title="Previous">
@@ -153,11 +135,9 @@
     </div>
   </div>
 
-  <!-- hidden YouTube player target -->
   <div id="youtube-player" class="youtube-target" aria-hidden="true"></div>
 </section>
 
-<!-- gallery screen -->
 <section id="gallery-screen" class="screen screen--gallery" aria-label="Photograph gallery">
   <div class="screen-nav">
     <button class="back-button back-button--dark" data-back aria-label="Back to home">
@@ -170,7 +150,6 @@
 
   <div class="gallery-grid" id="gallery-grid"><!-- populated by script.js: a plain grid of all 13 photos, no fullscreen viewer --></div>
 
-  <!-- hidden letter easter egg: a small folded note tucked in the corner -->
   <button class="hidden-letter" id="hidden-letter" aria-label="A folded note">
     <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true">
       <path d="M3 8h34v24H3z" fill="none" stroke="currentColor" stroke-width="1.4"/>
@@ -179,7 +158,6 @@
   </button>
 </section>
 
-<!-- journal screen -->
 <section id="journal-screen" class="screen screen--journal" aria-label="Journal">
   <div class="screen-nav">
     <button class="back-button back-button--dark" data-back aria-label="Back to home">
@@ -190,7 +168,6 @@
 
   <h2 class="gallery-title">Journal</h2>
 
-  <!-- password gate -->
   <div class="journal-lock" id="journal-lock">
     <p class="journal-lock__prompt">Secret journal only for us.</p>
     <form id="journal-lock-form" class="journal-lock__form">
@@ -200,17 +177,13 @@
     <p class="journal-lock__error" id="journal-lock-error" hidden>Try again :)</p>
   </div>
 
-  <!-- unlocked journal contents -->
   <div class="journal-content" id="journal-content" hidden>
-
     <button class="journal-add-button" id="journal-add-button" aria-label="Write a new entry">
       <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
-
     <div class="journal-entries" id="journal-entries"><!-- populated by script.js --></div>
   </div>
 
-  <!-- composer for a brand-new entry -->
   <div class="journal-composer" id="journal-composer" hidden>
     <div class="journal-composer__card">
       <label class="journal-composer__date" for="journal-composer-date">Date</label>
@@ -226,23 +199,19 @@
     </div>
   </div>
 
-  <!-- brief confirmation toast after saving, no code shown -->
   <div class="journal-toast" id="journal-toast" hidden></div>
-
 </section>
 
-<!-- journal entry viewer (opened from a calendar day) -->
 <div id="journal-entry-view" class="letter-overlay" hidden>
   <button class="letter-overlay__close" id="journal-entry-view-close" aria-label="Close entry">
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
   </button>
   <div class="letter-overlay__paper">
     <p class="journal-entry-view__date" id="journal-entry-view-date"></p>
-    <p class="letter-overlay__text" id="journal-entry-view-text"></p>
+    <div class="letter-overlay__text" id="journal-entry-view-text"></div>
   </div>
 </div>
 
-<!-- photo enlarge overlay -->
 <div id="photo-enlarge" class="photo-enlarge" hidden>
   <button class="photo-enlarge__close" id="photo-enlarge-close" aria-label="Close">
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -253,7 +222,6 @@
   </figure>
 </div>
 
-<!-- expanded letter overlay -->
 <div id="letter-overlay" class="letter-overlay" hidden>
   <button class="letter-overlay__close" id="letter-overlay-close" aria-label="Close letter">
     <svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -263,7 +231,6 @@
   </div>
 </div>
 
-<!-- youtube iframe api -->
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="script.js"></script>
 </body>
